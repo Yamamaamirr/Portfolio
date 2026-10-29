@@ -175,9 +175,9 @@
     drawChart(p, s.focus);
     capEls.forEach((c) => (c.dataset.level = s.caps[c.dataset.cap]));
     drawDonut(s.time);
-    const commits = commitsTo(revealM);
-    el.counter.innerHTML = `<b>${fmt(commits)}</b> commits shipped`;
-    setCount(el.squares, clamp(Math.round(commits / 100), 0, 40));
+    const months = workMonthsTo(revealM);
+    el.counter.innerHTML = `<b>${months}</b> month${months === 1 ? "" : "s"} of industry work`;
+    setCount(el.squares, clamp(months, 0, 40));
     el.stats.querySelectorAll("b").forEach((b) => (b.textContent = fmt(s.stats[b.dataset.k])));
     ["shipped", "building", "plates"].forEach((k) => {
       setDots(el[k], s[k]);
@@ -223,24 +223,25 @@
   const wrap = $(".contrib-wrap");
   const ORGS = JSON.parse(wrap.dataset.orgs);
   const month = (ym) => { const [y, m] = ym.split("-").map(Number); return y * 12 + (m - 1); }; // months since year 0
-  const ymOf = (m) => `${Math.floor(m / 12)}-${String((m % 12) + 1).padStart(2, "0")}`;
   const GRID_A = month("2021-11"), GRID_B = month("2028-05"), COLS = GRID_B - GRID_A + 1, ROWS = 7;
   const TODAY = (() => { const d = new Date(); return d.getFullYear() * 12 + d.getMonth(); })();
   const LANES = [["Study", 0, 1], ["Research", 2, 2], ["Work", 4, 6]];
   ORGS.forEach((o) => { o.a = month(o.from); o.b = month(o.to); });
   const activeAt = (m) => ORGS.filter((o) => m >= o.a && m <= o.b).sort((x, y) => x.rows[0] - y.rows[0]);
-  const commitsTo = (m) => ORGS.reduce((n, o) => n + Object.entries(o.commits || {})
-    .reduce((t, [k, v]) => t + (month(k) <= m ? v : 0), 0), 0);
+  // months with any work lane active up to the story's date; overlapping jobs count once
+  const WORK = ORGS.filter((o) => o.rows[0] >= 4);
+  const workMonthsTo = (m) => {
+    let n = 0;
+    for (let k = GRID_A; k <= Math.floor(m); k++) if (WORK.some((o) => k >= o.a && k <= o.b)) n++;
+    return n;
+  };
   const cells = [];
   for (let c = 0; c < COLS; c++) {
     const m = GRID_A + c;
     for (let r = 0; r < ROWS; r++) {
       const org = ORGS.find((o) => o.rows.includes(r) && m >= o.a && m <= o.b);
       let lvl = 0;
-      if (org && org.commits) {  // work lanes: shade by that month's commits
-        const n = org.commits[ymOf(m)] || 0;
-        lvl = n < 30 ? 1 : n < 55 ? 2 : n < 100 ? 3 : 4;
-      } else if (org) {          // study and research: a steady rhythm, seeded so it's the same on every visit
+      if (org) {  // a steady rhythm, seeded so it's the same on every visit; the shade carries no count
         const h = hash(c, r, 17) * 0.55 + hash(c >> 1, r, 29) * 0.45;
         lvl = clamp(Math.ceil((h * 0.6 + org.level * 0.55) * 4) - 1, 0, 4);
       }

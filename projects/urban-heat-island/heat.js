@@ -1,7 +1,7 @@
 (() => {
   // ───────── Fig. 1: the tract map, six views ─────────
   // Tracts arrive in UTM 12N (metres / 40) as delta-encoded rings; each becomes a Path2D once,
-  // then every redraw is a fill per tract. Same machinery as Plate V.
+  // then every redraw is a fill per tract. Same machinery as Plate I.
   const D = window.UHI_DATA;
   const host = document.getElementById("heatmap");
   if (!D || !host) return;

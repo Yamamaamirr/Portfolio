@@ -7,7 +7,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 // data-mode="photo" shows the photo-textured mesh; otherwise the surface is shaded and coloured by height.
 // Each viewer loads when it nears view and only draws while on screen.
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-// the stylised look from Plate I: a blue ramp from the table to the top of the box
+// the stylised look from Plate IV: a blue ramp from the table to the top of the box
 const RAMP = ["#e9e6dc", "#c9d8e6", "#a9bfd4", "#4f7fa8", "#1f4e79", "#132f4a"].map((c) => new THREE.Color(c));
 const rampAt = (t) => {
   const x = Math.min(0.9999, Math.max(0, t)) * (RAMP.length - 1), i = Math.floor(x);
