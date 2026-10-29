@@ -40,7 +40,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--serif);
-  font-size: clamp(19px, 1.45vw, 23px);
+  font-size: clamp(17px, 1.3vw, 21px);
   line-height: 1.6;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -334,7 +334,7 @@ sup.fn:hover { color: var(--orange-ink); }
 /* ───────── Small screens: panel becomes a slim bottom bar ───────── */
 @media (max-width: 900px) {
   :root { --gutter: 14px; }
-  body { font-size: 18px; line-height: 1.5; }
+  body { font-size: 17px; line-height: 1.5; }
   .sheet { display: none; }
   .map-marginalia { display: none; }
   .layout { grid-template-columns: minmax(0, 1fr); }
