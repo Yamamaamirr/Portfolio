@@ -167,9 +167,6 @@ sup.fn:hover { color: var(--orange-ink); }
 .reveal { opacity: 0; transform: translateY(14px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
 .reveal.in { opacity: 1; transform: none; }
 
-/* raster figure */
-.raster-break { margin: 0 0 14vh; }
-.raster-break canvas { width: 100%; aspect-ratio: 16 / 10; display: block; }
 .caption { font-family: var(--mono); font-size: 13px; color: var(--muted); margin-top: 10px; line-height: 1.5; }
 
 /* Atlas */
@@ -274,7 +271,7 @@ sup.fn:hover { color: var(--orange-ink); }
 
 /* contribution grid: header, the grid itself, then a key of places */
 .contrib-wrap { display: flex; flex-direction: column; gap: 6px; padding: 8px 10px; height: auto; }
-.contrib-wrap canvas { flex: none; }
+.contrib-wrap canvas { flex: none; width: 100%; height: 107px; } /* set before the script runs, so the panel never jumps */
 .contrib-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 12px; }
 .contrib-now { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .contrib-now b { font-weight: 700; }
@@ -287,6 +284,7 @@ sup.fn:hover { color: var(--orange-ink); }
 .caps-row { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; }
 .caps-label { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
 .caps { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; }
+.caps:empty { min-height: 120px; } /* holds the row open until the script fills it */
 .cap { display: flex; align-items: center; gap: 10px; transition: opacity .5s; }
 .cap .ic {
   width: 32px; height: 28px; border-radius: 5px; display: grid; place-items: center;
@@ -308,7 +306,7 @@ sup.fn:hover { color: var(--orange-ink); }
 .dots.accent i { background: var(--accent-soft); }
 @keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
 
-.stats { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; gap: 8px; }
+.stats { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; gap: 8px; min-height: 42px; }
 .stats div { display: flex; flex-direction: column; gap: 2px; }
 .stats span { font-size: 11px; }
 .stats b { font-size: 14px; }
@@ -380,6 +378,8 @@ sup.fn:hover { color: var(--orange-ink); }
   .contrib-wrap { align-self: center; }
   .map-readout, .map-label { display: none; }
   .contrib-wrap { padding: 4px; height: auto; }
+  .contrib-wrap canvas { height: 35px; }
+  .panel.open .contrib-wrap canvas { height: 107px; }
   .contrib-head, .contrib-key { display: none; }
   .counter { grid-area: counter; font-size: 11px; }
   .chart, .caps-row, .squares, .stats, .buckets { display: none; }

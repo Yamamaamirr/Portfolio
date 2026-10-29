@@ -7,10 +7,13 @@
   const fmt = (n) => Math.round(n).toLocaleString("en-US");
 
   // ───────── Smooth scroll ─────────
+  // Lenis loads async so the panel never waits on it; smooth scrolling starts whenever it arrives
   let lenis = null;
-  if (!reduceMotion && window.Lenis) {
-    lenis = new Lenis({ duration: 1.15, easing: (t) => 1 - Math.pow(1 - t, 4) });
-  }
+  const startLenis = () => {
+    if (!lenis && !reduceMotion && window.Lenis) lenis = new Lenis({ duration: 1.15, easing: (t) => 1 - Math.pow(1 - t, 4) });
+  };
+  startLenis();
+  if (!lenis) $("#lenis-js")?.addEventListener("load", startLenis);
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener("click", (e) => {
       const id = a.getAttribute("href");
@@ -268,7 +271,7 @@
   const SHADE = [0.14, 0.32, 0.55, 0.78, 1];
   const inLane = (r) => LANES.some(([, a, b]) => r >= a && r <= b);
   // on load the first place sweeps in over about a second instead of appearing at once
-  const t0 = performance.now();
+  let t0 = performance.now();
   let intro = reduceMotion ? 1 : 0;
 
   function drawContrib() {
@@ -277,7 +280,7 @@
     const labW = small ? 0 : 66, yearH = small ? 0 : 16;
     const step = (cw - labW) / COLS, sw = Math.max(1, step - Math.max(1, step * 0.18));
     const rowH = (chh - yearH) / ROWS, sh = Math.max(1, rowH - Math.max(1, rowH * 0.22));
-    intro = reduceMotion ? 1 : clamp((performance.now() - t0 - 300) / 1100);
+    intro = reduceMotion ? 1 : clamp((performance.now() - t0 - 150) / 1100);
     cctx.clearRect(0, 0, cw, chh);
     cctx.font = `11px ${monoFont()}`;
     cctx.fillStyle = "#646462";
@@ -439,5 +442,7 @@
 
   resize();
   renderPanel(0);
+  // grid labels are drawn on a canvas, so redraw once the real fonts arrive
+  document.fonts?.ready.then(() => { gridBusy = true; });
   requestAnimationFrame(frame);
 })();

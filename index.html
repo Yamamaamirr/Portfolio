@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=21" />
+  <link rel="stylesheet" href="styles.css?v=26" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -106,8 +106,8 @@
           I've built for companies alongside a pile of analyses I did out of pure curiosity (or the night before an
           assignment was due).<sup class="fn" data-note="The panel on the right fills in as you scroll. It works like a GitHub contribution graph: one column per month since 2021, one lane each for study, research and work, so you can see where they overlapped. Filled months show when each one was active.">1</sup></p>
         <div class="pills">
-          <a href="#story">What do I do?</a>
-          <a href="#atlas">What have I built?</a>
+          <a href="#story">Where I've worked</a>
+          <a href="#atlas">What I've built</a>
           <a href="#contact">Say hello</a>
         </div>
       </section>
@@ -392,7 +392,7 @@
             <span class="map-label">1 column = 1 month</span>
           </div>
           <canvas id="contrib"></canvas>
-          <div class="contrib-key" id="contrib-key"></div>
+          <div class="contrib-key" id="contrib-key"><span><i style="background:#141414"></i>NUST</span><span><i style="background:#57068c"></i>NYU CUSP</span><span><i style="background:#c8782f"></i>CERA Lab</span><span><i style="background:#2f7d6d"></i>Earthbound AI</span><span><i style="background:#4f7fa8"></i>Adgile Media</span></div>
         </div>
 
         <div class="caps-row">
@@ -401,7 +401,7 @@
           <svg id="donut" class="donut" viewBox="0 0 100 100"></svg>
         </div>
 
-        <p class="counter" id="p-counter"></p>
+        <p class="counter" id="p-counter"><b>0</b> months of industry work</p>
         <div class="squares" id="p-squares"></div>
 
         <div class="stats" id="p-stats"></div>
@@ -422,9 +422,9 @@
     <p class="ap-abstract"></p>
   </figure>
 
-  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script async src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" id="lenis-js"></script>
   <script src="sheet.js?v=2"></script>
-  <script src="main.js?v=17"></script>
+  <script src="main.js?v=18"></script>
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
   <script type="module" src="earthbound.js?v=57"></script>
   <script type="module" src="adgile.js?v=28"></script>
