@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../icons/4326-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../icons/4326-16.png" />
+  <link rel="apple-touch-icon" href="../../icons/4326-180.png" />
+  <title>Smoke over NYC · Yamama Amir</title>
+  <meta name="description" content="Tracing the June 2023 Canadian wildfire smoke over New York City with Sentinel-5P and EPA ground monitors." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../project.css" />
+</head>
+<body class="project">
+  <canvas id="sheet" class="sheet" aria-hidden="true"></canvas>
+
+  <header class="top project-top">
+    <a class="back" href="../../#atlas">← Yamama Amir</a>
+    <nav>
+      <a href="../../#story">Story</a>
+      <a href="../../#atlas">Atlas</a>
+      <a class="boxed" href="../../#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="case">
+    <p class="sheet-no">Plate II · Atmospheric remote sensing · June&nbsp;2023</p>
+    <h1>Smoke from Canada over New York City</h1>
+    <p class="lede">A plume that travelled a thousand kilometres in two days, followed from orbit and measured at street level.</p>
+
+    <p class="meta">Monitoring Cities · NYU · Prof. Masoud Ghandehari<span class="sep"> &nbsp;|&nbsp; </span><span class="tools">Google Earth Engine · Sentinel-5P · EPA AirData</span></p>
+
+    <dl class="stats-row">
+      <div><dt>Aerosol index over NYC</dt><dd>0.11 → 6.67</dd></div>
+      <div><dt>Carbon monoxide</dt><dd>4× <small>normal</small></dd></div>
+      <div><dt>Peak daily PM2.5</dt><dd>201.7 <small>µg/m³ (Queens)</small></dd></div>
+      <div><dt>City's own NO₂</dt><dd>13.2 <small>vs 13.3 ppb</small></dd></div>
+    </dl>
+
+    <section class="prose-block">
+      <p>On the afternoon of 7 June 2023, New York's air quality index reached 484, the worst reading officials had
+        recorded since the 1960s. The sky turned orange. The cause was about 1,000 km to the north: wildfires burning
+        in Quebec.</p>
+      <p>I wanted to trace that smoke from the fires to the city, measure how much it changed the air above New York,
+        and test whether the pollution really came from outside rather than from the city's own traffic. The satellite
+        is Sentinel-5P, whose TROPOMI instrument passes over once a day at about 1:30 pm; the street-level check comes
+        from EPA monitors in the Bronx and Queens.</p>
+    </section>
+
+    <figure class="fig wide">
+      <div class="days">
+        <div><img src="img/day_0605.jpg" alt="Aerosol index on 5 June 2023: thick smoke over Ontario and western Quebec" width="815" height="1017" loading="lazy" /><span>5 June</span></div>
+        <div><img src="img/day_0606.jpg" alt="Aerosol index on 6 June 2023: the plume moving south over upstate New York and Pennsylvania" width="815" height="1017" loading="lazy" /><span>6 June</span></div>
+        <div class="on"><img src="img/day_0607.jpg" alt="Aerosol index on 7 June 2023: smoke directly over New York City" width="815" height="1017" loading="lazy" /><span>7 June</span></div>
+        <div><img src="img/day_0608.jpg" alt="Aerosol index on 8 June 2023: the plume pushed out over the Atlantic" width="815" height="1017" loading="lazy" /><span>8 June</span></div>
+      </div>
+      <figcaption>
+        <span><b>Fig. 1</b> · The smoke's journey, one satellite pass per day. Darker is thicker smoke; New York City is
+          drawn in black, and grey areas have no valid data. On 6 June the plume reached the city after the 1:30 pm pass.</span>
+        <span class="legend-ramp">−1 <i class="smoke"></i> 2+</span>
+      </figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <h2>Before and during</h2>
+      <p>To measure the change, I compared a normal week before the smoke (<b>T1</b>, 30 May to 4 June) with 7 June
+        (<b>T2</b>), the only day the satellite's pass found thick smoke over the city itself. Every city-wide value is
+        the median over the five boroughs.</p>
+      <p>Over New York, the aerosol index went from <b>0.11 to 6.67</b>, about sixty times higher. The rise sits in a
+        single band running from Pennsylvania across New Jersey to the city, the same path the smoke followed in the
+        daily maps, while most of the region outside it barely changed.</p>
+    </section>
+
+    <figure class="fig narrow">
+      <div class="swipe" style="--pos: 50%">
+        <img src="img/aai_t2.jpg" alt="Aerosol index on 7 June 2023, the worst smoke day" width="815" height="1017" loading="lazy" />
+        <div class="swipe-top"><img src="img/aai_t1.jpg" alt="Average aerosol index for the normal week, 30 May to 4 June 2023" width="815" height="1017" loading="lazy" /></div>
+        <div class="swipe-line" aria-hidden="true"><span>⟷</span></div>
+        <span class="swipe-tag left">← T1 · 30 May – 4 Jun</span>
+        <span class="swipe-tag right later smoke">T2 · 7 Jun →</span>
+        <input type="range" min="0" max="100" value="50" step="0.1" aria-label="Drag to compare the normal week with 7 June" />
+      </div>
+      <figcaption>
+        <span><b>Fig. 2</b> · Drag the arrow right towards 7 June, left towards the normal week. Sentinel-5P aerosol index,
+          on one scale for both.</span>
+        <span class="legend-ramp">−1 <i class="smoke"></i> 2+</span>
+      </figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <h2>Carbon monoxide, the fingerprint of fire</h2>
+      <p>Haze alone could be dust or cloud. Burning forests also release carbon monoxide, so if the haze was smoke,
+        CO should rise on the same day along the same path. It did: over the city it went from <b>41,700 to
+        169,700</b> (mol/m² × 10⁶), about four times higher, following the same band out over the Atlantic. In the
+        normal week the highest CO was already over Quebec, where the fires were releasing it before the wind
+        turned south.</p>
+    </section>
+
+    <figure class="fig wide">
+      <div class="pair">
+        <div><img src="img/aai_change.jpg" alt="Change in aerosol index, 7 June minus the normal week" width="815" height="1017" loading="lazy" /><span>Aerosol index</span></div>
+        <div><img src="img/co_change.jpg" alt="Change in carbon monoxide, 7 June minus the normal week" width="815" height="1017" loading="lazy" /><span>Carbon monoxide</span></div>
+      </div>
+      <figcaption>
+        <span><b>Fig. 3</b> · Change, 7 June minus the normal week. Both rise along one band from Pennsylvania to New
+          York City. Grey areas have no valid data.</span>
+        <span class="legend-div"><i class="fell"></i>fell<i class="rose"></i>rose</span>
+      </figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <h2>The control, and what people breathed</h2>
+      <p>Nitrogen dioxide comes mainly from the city's own traffic and breaks down within about a day. If the pollution
+        came from outside, NO₂ over the city should have stayed normal. The smoke was so thick on 7 June that the
+        satellite's quality check removed all of its NO₂ data over the city, so this test fell to four EPA ground
+        stations: <b>13.2 ppb</b> on 7 June against 13.3 ppb in the normal week, well within the usual 5 to 26.</p>
+      <p>Fine particles told the opposite story. Both PM2.5 stations averaged about 11 µg/m³ in the normal week, then stayed
+        above the EPA's daily limit of 35 for three days running. On 7 June the daily average reached <b>176.5</b> in
+        the Bronx and <b>201.7</b> in Queens, five to six times the limit, with a worst single hour of 410.</p>
+    </section>
+
+    <figure class="fig wide">
+      <div class="timeline" id="timeline"></div>
+      <figcaption>
+        <span><b>Fig. 4</b> · Four measurements over New York City, one value per day, 15 May to 30 June. Hover to read
+          any day; the orange band is the smoke, 6–8 June. Smoke, CO and fine particles spike together while traffic
+          NO₂ (grey band: range across four stations) doesn't move. A second, smaller wave returns on 29–30 June.</span>
+        <span class="legend-div tl-key"><i class="k-q"></i>Queens<i class="k-b"></i>Bronx</span>
+      </figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <h2>What it adds up to</h2>
+      <p>The daily maps show the plume moving about 1,000 km south and covering the city on 7 June. On that day the
+        satellite saw smoke and carbon monoxide rise sharply over New York, while the city's own traffic pollution,
+        measured on the ground, stayed at its usual level. The particles people breathed reached five to six
+        times the EPA limit. A study in <em>JAMA</em> found asthma emergency-room visits in the city rose by 44% during
+        the smoke.</p>
+    </section>
+
+    <footer class="sources">
+      <p class="sheet-no">Sources</p>
+      <p>Copernicus Sentinel-5P TROPOMI offline L3 products (aerosol index, CO, NO₂, SO₂) via Google Earth Engine ·
+        EPA AirData daily files, PM2.5 (88101) and NO₂ (42602), 2023 · EPA NAAQS · US Census TIGER 2018 counties ·
+        Chen et al. (2023), <em>JAMA</em> · NASA Earth Observatory · NYC Mayor's Office briefing, 7 June 2023.
+        Maps exported from Earth Engine and recoloured for this page; satellite daily values read from the Earth Engine charts.</p>
+      <p><a class="back" href="../../#atlas">← Back to the Atlas</a></p>
+    </footer>
+  </main>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="../../sheet.js?v=2"></script>
+  <script src="../project.js"></script>
+  <script src="data.js"></script>
+  <script src="smoke.js"></script>
+</body>
+</html>

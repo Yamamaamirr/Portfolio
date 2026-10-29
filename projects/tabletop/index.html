@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../icons/4326-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../icons/4326-16.png" />
+  <link rel="apple-touch-icon" href="../../icons/4326-180.png" />
+  <title>Tabletop Demolition · Yamama Amir</title>
+  <meta name="description" content="A 3D surface model of a tabletop scene from phone video, measuring a 7 cm change to within a millimetre." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../project.css" />
+  <script type="importmap">
+    { "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    } }
+  </script>
+</head>
+<body class="project">
+  <canvas id="sheet" class="sheet" aria-hidden="true"></canvas>
+
+  <header class="top project-top">
+    <a class="back" href="../../#atlas">← Yamama Amir</a>
+    <nav>
+      <a href="../../#story">Story</a>
+      <a href="../../#atlas">Atlas</a>
+      <a class="boxed" href="../../#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="case">
+    <p class="sheet-no">Plate III · Structure from Motion · October&nbsp;2026</p>
+    <h1>A Demolition on the Dining Table</h1>
+    <p class="lede">Seven phone videos, four taped markers, and a 7 cm change measured to within a millimetre.</p>
+
+    <p class="meta">Monitoring Cities · NYU · Prof. Masoud Ghandehari<span class="sep"> &nbsp;|&nbsp; </span><span class="tools">Agisoft Metashape · Python · QGIS</span></p>
+
+    <dl class="stats-row">
+      <div><dt>Stack height drop</dt><dd>7.0 cm <small>(tape 7.1)</small></dd></div>
+      <div><dt>Box removed</dt><dd>−15.5 cm</dd></div>
+      <div><dt>Level of detection</dt><dd>±0.63 mm</dd></div>
+      <div><dt>Model-to-model fit</dt><dd>0.46 mm</dd></div>
+    </dl>
+
+    <section class="prose-block">
+      <p>Two of the ways cities change: buildings come down entirely, or they lose a few floors. I wanted to see whether
+        a phone could measure both, so I staged them on a 1 × 0.5 m table: a folded stack of shirts as a mid-rise, a
+        shoebox as a tower, and four taped crosses as survey markers. Between two visits, the top two shirts and the
+        box went away.</p>
+    </section>
+
+    <figure class="fig wide">
+      <div class="model3d loading" data-mode="photo" id="model3d" aria-label="Interactive photo-textured 3D model of the tabletop scene. Drag to rotate, scroll or pinch to zoom.">
+        <canvas></canvas>
+        <div class="model-years orbit-years" role="group" aria-label="Visit">
+          <button type="button" data-v="before" aria-pressed="true">Before</button>
+          <button type="button" data-v="after">After</button>
+        </div>
+        <span class="orbit-hint" aria-hidden="true">⟲ Drag to rotate · scroll to zoom</span>
+        <span class="orbit-heading model-status" aria-hidden="true"></span>
+      </div>
+      <figcaption>
+        <span><b>Fig. 1</b> · The scene as Metashape rebuilt it from the video frames, photo texture and all. Drag to
+          orbit, and switch to the second visit at the same angle: the box is gone and the stack is two shirts thinner.</span>
+      </figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <h2>From video to surface</h2>
+      <p>Each visit was filmed in 4K as a low circle, a high circle at 45° and an overhead pass. A script kept the
+        sharpest frame in each half-second window: <b>102 frames before, 117 after</b>. Every frame that passed the
+        quality check aligned, with a reprojection error of about one pixel.</p>
+    </section>
+
+    <figure class="fig wide" id="stages">
+      <div class="stage-years orbit-years static" role="group" aria-label="Visit">
+        <button type="button" data-v="before" aria-pressed="true">Before</button>
+        <button type="button" data-v="after">After</button>
+      </div>
+      <div class="stages">
+        <div><img src="img/stage_before_1.jpg" alt="Sparse cloud of tie points with the camera positions circling the table" width="900" height="600" loading="lazy" /><span>1 · Cameras &amp; tie points</span></div>
+        <div><img src="img/stage_before_2.jpg" alt="Dense point cloud of the scene" width="900" height="600" loading="lazy" /><span>2 · Dense cloud</span></div>
+        <div><img src="img/stage_before_3.jpg" alt="Untextured mesh of the scene" width="900" height="600" loading="lazy" /><span>3 · Mesh</span></div>
+        <div><img src="img/stage_before_4.jpg" alt="Textured 3D model of the scene" width="900" height="600" loading="lazy" /><span>4 · Texture</span></div>
+      </div>
+      <figcaption>
+        <span><b>Fig. 2</b> · Both visits through Metashape's pipeline. In the first panel each blue rectangle is one
+          video frame, placed where the phone was. Before: 3.04M points, 2.38M faces; after: 1.78M points, 1.65M faces.</span>
+      </figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <p>The marker centres were found automatically, by fitting two lines to each tape cross and intersecting them in
+        every frame where it appears. The six tape distances then gave the model its scale, to about 6 mm
+        horizontally and under half a millimetre in height.</p>
+    </section>
+
+    <section class="prose-block">
+      <h2>Measuring the change</h2>
+      <p>Strip away the photo and what's left is the surface itself. Both visits became a digital surface model on
+        exactly the same 4 mm grid.</p>
+    </section>
+
+    <figure class="fig wide">
+      <div class="model3d loading" id="model3d-height" aria-label="Interactive 3D surface of the tabletop scene, coloured by height. Drag to rotate, scroll or pinch to zoom.">
+        <canvas></canvas>
+        <div class="model-years orbit-years" role="group" aria-label="Visit">
+          <button type="button" data-v="before" aria-pressed="true">Before</button>
+          <button type="button" data-v="after">After</button>
+        </div>
+        <span class="orbit-hint" aria-hidden="true">⟲ Drag to rotate · scroll to zoom</span>
+        <span class="orbit-heading model-status" aria-hidden="true"></span>
+      </div>
+      <figcaption>
+        <span><b>Fig. 3</b> · The same models without the photo, shaded and coloured by height. Switch visits to watch
+          the box disappear and the stack sink.</span>
+        <span class="legend-ramp">0 <i class="pc"></i> 15 cm</span>
+      </figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <p>Subtracting one surface from the other gives the change. To know what counts as real, I measured the
+        difference on 2,222 cells of table that nobody touched: a mean of −0.25 mm, which puts the 95%
+        <b>level of detection at ±0.63 mm</b>. Against that, the box shows as a uniform 15 cm loss, and at the centre
+        of the stack the surface dropped <b>7.0 cm</b>; a ruler said 7.1.</p>
+    </section>
+
+    <figure class="fig wide">
+      <div class="annotated section-map">
+        <img src="img/change.jpg" alt="Height change map, after minus before: the box in deep orange, the thinned stack in lighter orange" width="1770" height="1002" loading="lazy" />
+        <span class="section-line" aria-hidden="true"></span>
+        <span class="pin" style="--x: 77%; --y: 30%"><span class="lbl"><b>Box removed</b> −15.5 cm</span></span>
+        <span class="pin left" style="--x: 38%; --y: 46.8%"><span class="lbl"><b>Stack, centre</b> −7.0 cm</span></span>
+        <span class="pin muted" style="--x: 8%; --y: 88%"><span class="lbl"><b>Untouched table</b> −0.25 mm</span></span>
+      </div>
+      <div class="section" id="section">
+        <svg class="section-svg" role="img" aria-label="Height profile across the table, before and after"></svg>
+        <label class="section-ctl">
+          <span class="section-y">y = 28.0 cm</span>
+          <input type="range" min="0" max="166" value="77" aria-label="Move the cross-section across the table" />
+        </label>
+      </div>
+      <figcaption>
+        <span><b>Fig. 4</b> · Height change, after − before, over the shaded relief of the after surface, and a cross-section
+          through both surfaces. Drag the slider to move the section line across the table. Thin blue slivers are the
+          remaining shirt spreading as the top layers came off: a real change, about 0.24 L.</span>
+        <span class="legend-div"><i class="loss"></i>lost<i class="gain"></i>gained</span>
+      </figcaption>
+    </figure>
+
+    <figure class="fig">
+      <table class="data">
+        <caption>Model against tape measure</caption>
+        <thead><tr><th>What</th><th>Model</th><th>Tape</th><th>Difference</th></tr></thead>
+        <tbody>
+          <tr><td>Stack drop, centre 10 × 10 cm</td><td>7.0 cm</td><td>7.1 cm</td><td>−1.5%</td></tr>
+          <tr><td>Box height</td><td>15.4 cm</td><td>14.7 cm</td><td>+4%</td></tr>
+          <tr class="flag"><td>Box volume removed</td><td>17.6 L</td><td>15.2 L</td><td>+16%<sup class="fn" data-note="The lid is wider than the base the tape measured, and a 4 mm grid smears the box's vertical edges outwards.">1</sup></td></tr>
+          <tr><td>Clothes volume removed</td><td>10.8 L</td><td>≈ 11.8 L</td><td>−8%</td></tr>
+          <tr><td>Untouched table</td><td>−0.25 mm</td><td>0</td><td>RMSE 0.32 mm</td></tr>
+        </tbody>
+      </table>
+    </figure>
+
+    <footer class="sources">
+      <p class="sheet-no">Sources</p>
+      <p>Seven iPhone 17 Pro videos, 18 October 2026 · Agisoft Metashape Professional 2.3.2 · Python (frame selection, marker detection, change detection) · QGIS.
+        The 3D models are decimated from the Metashape meshes for the web.</p>
+      <p><a class="back" href="../../#atlas">← Back to the Atlas</a></p>
+    </footer>
+  </main>
+
+  <div class="tooltip" id="tooltip" role="tooltip"></div>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="../../sheet.js?v=2"></script>
+  <script src="../project.js"></script>
+  <script type="module" src="tabletop.js"></script>
+</body>
+</html>

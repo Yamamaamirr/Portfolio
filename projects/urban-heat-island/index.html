@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../icons/4326-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../icons/4326-16.png" />
+  <link rel="apple-touch-icon" href="../../icons/4326-180.png" />
+  <title>Heat in a Desert City · Yamama Amir</title>
+  <meta name="description" content="Phoenix in the July 2023 heat record: Landsat 9 surface temperature, vegetation and built-up indices joined to social vulnerability across 788 census tracts." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../project.css" />
+</head>
+<body class="project">
+  <canvas id="sheet" class="sheet" aria-hidden="true"></canvas>
+
+  <header class="top project-top">
+    <a class="back" href="../../#atlas">← Yamama Amir</a>
+    <nav>
+      <a href="../../#story">Story</a>
+      <a href="../../#atlas">Atlas</a>
+      <a class="boxed" href="../../#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="case">
+    <p class="sheet-no">Plate VI · Thermal remote sensing · Phoenix, July 2023</p>
+    <h1>Heat in a desert city</h1>
+    <p class="lede">Most of what we know about who gets the hottest streets comes from temperate and Mediterranean
+      cities. Does the pattern hold in a desert, where the land around the city runs hotter than the city itself?</p>
+
+    <p class="meta">Independent project<span class="sep"> &nbsp;|&nbsp; </span><span class="tools">ArcGIS Pro · Spatial Analyst · Landsat 9 Collection 2 · CDC SVI</span></p>
+
+    <dl class="stats-row">
+      <div><dt>Census tracts analysed</dt><dd>788</dd></div>
+      <div><dt>Built-up surface and heat</dt><dd>ρ = +0.48</dd></div>
+      <div><dt>Vulnerability and vegetation</dt><dd>ρ = −0.44</dd></div>
+      <div><dt>Vulnerability and heat</dt><dd>r = −0.03 <small>p = 0.41</small></dd></div>
+    </dl>
+
+    <section class="prose-block">
+      <p>In July 2023 Phoenix spent <b>31 days in a row at or above 110 °F</b>, from 30 June to 31 July, breaking the
+        1974 record of 18. It peaked at 119 °F on the 20th and the 25th, and the month averaged 102.7 °F, the hottest
+        month any US city has recorded. Landsat 9 passed over at 11:03 on <b>24 July</b>, one day before the second
+        peak, with 4% cloud. Landsat only revisits every eight days, so the date was chosen from what existed, not
+        picked freely.</p>
+      <p>From that one scene I derived three surfaces: <b>land surface temperature</b> from the thermal band, a
+        vegetation index (<b>NDVI</b>) from red and near infrared, and a built-up index (<b>NDBI</b>) from near and
+        shortwave infrared. Then I set them against the CDC's <b>Social Vulnerability Index</b>, a 0 to 1 percentile
+        that ranks every tract on poverty, housing, language, age, disability and more.</p>
+    </section>
+
+    <figure class="fig wide">
+      <div class="gapmap" id="heatmap">
+        <div class="gm-views" role="group" aria-label="Map view">
+          <button type="button" data-view="t" aria-pressed="true">Heat</button>
+          <button type="button" data-view="v" aria-pressed="false">Vegetation</button>
+          <button type="button" data-view="b" aria-pressed="false">Built up</button>
+          <button type="button" data-view="s" aria-pressed="false">Vulnerability</button>
+          <button type="button" data-view="q" aria-pressed="false">Overlap</button>
+          <button type="button" data-view="o" aria-pressed="false">First pass</button>
+        </div>
+        <canvas aria-label="Map of Maricopa County census tracts coloured by the selected measure"></canvas>
+        <div class="gm-read" aria-live="polite"></div>
+      </div>
+      <figcaption>
+        <span class="gm-cap" data-for="t"><b>Fig. 1</b> · Mean land surface temperature per tract, 24 July 2023, 11:03.
+          This is the ground, not the air: bare desert and rooftops run far hotter than a thermometer in the shade.
+          Hatched tracts are left out, mostly under cloud or cloud shadow. Hover any tract.</span>
+        <span class="gm-cap" data-for="v" hidden><b>Fig. 1</b> · Mean NDVI per tract. Healthy plants absorb red light and
+          reflect near infrared, so the bigger the gap between the two bands, the greener the tract.</span>
+        <span class="gm-cap" data-for="b" hidden><b>Fig. 1</b> · Mean NDBI per tract. Roofs and paving reflect shortwave
+          infrared more than near infrared; vegetation does the opposite.</span>
+        <span class="gm-cap" data-for="s" hidden><b>Fig. 1</b> · CDC Social Vulnerability Index 2022, overall percentile.
+          Higher means more vulnerable.</span>
+        <span class="gm-cap" data-for="q" hidden><b>Fig. 1</b> · The 110 tracts in both the most vulnerable quarter and the
+          least vegetated quarter of the study area.</span>
+        <span class="gm-cap" data-for="o" hidden><b>Fig. 1</b> · The first attempt, masking only pixels below 10 °C. Blue
+          tracts read below 45 °C on bare ground during a 119 °F heatwave, which can't be right.</span>
+        <span class="legend-cls gm-key" data-for="t">
+          <span><i style="background:#f7ecc9"></i>45.6–51.9 °C</span>
+          <span><i style="background:#f2c98a"></i>–57.5</span>
+          <span><i style="background:#e59a55"></i>–60.8</span>
+          <span><i style="background:#c8612a"></i>–63.0</span>
+          <span><i style="background:#8c2b16"></i>–67.7</span>
+        </span>
+        <span class="legend-cls gm-key" data-for="v" hidden>
+          <span><i style="background:#eef0dc"></i>0.08–0.15</span>
+          <span><i style="background:#cfdcae"></i>–0.19</span>
+          <span><i style="background:#a3c27f"></i>–0.22</span>
+          <span><i style="background:#6f9c55"></i>–0.28</span>
+          <span><i style="background:#3f6e35"></i>–0.40</span>
+        </span>
+        <span class="legend-cls gm-key" data-for="b" hidden>
+          <span><i style="background:#efe9df"></i>−0.13 to −0.06</span>
+          <span><i style="background:#d8c9b2"></i>–−0.03</span>
+          <span><i style="background:#b9a07f"></i>–0.00</span>
+          <span><i style="background:#8f7352"></i>–0.04</span>
+          <span><i style="background:#5e4630"></i>–0.11</span>
+        </span>
+        <span class="legend-cls gm-key" data-for="s" hidden>
+          <span><i style="background:#e8edf2"></i>0–0.19</span>
+          <span><i style="background:#c2d3e3"></i>–0.39</span>
+          <span><i style="background:#8fb0cf"></i>–0.59</span>
+          <span><i style="background:#4f7fa8"></i>–0.79</span>
+          <span><i style="background:#1f4e79"></i>–1.00</span>
+        </span>
+        <span class="legend-cls gm-key" data-for="q" hidden>
+          <span><i style="background:#c8782f"></i>Vulnerable and bare (110)</span>
+          <span><i style="background:#dedcd2"></i>Other study tracts</span>
+        </span>
+        <span class="legend-cls gm-key" data-for="o" hidden>
+          <span><i style="background:#4f7fa8"></i>Below 45 °C</span>
+          <span><i style="background:#e59a55"></i>Plausible, same scale as Heat</span>
+        </span>
+      </figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <h2>One detail that silently breaks NDVI</h2>
+      <p>Landsat stores reflectance as scaled integers: multiply by 0.0000275, then subtract 0.2. It is tempting to
+        skip that step for a ratio, on the reasoning that the scaling cancels. The multiplier does. The offset doesn't:
+        it cancels in the numerator but doubles in the denominator, so NDVI computed on stored values is simply wrong,
+        with no error to warn you. The thermal band needed the same care, a scale of 0.00341802 and an offset of 149 K,
+        which I took from the scene's own metadata file rather than a tutorial.</p>
+    </section>
+
+    <section class="prose-block">
+      <h2>Pixels into tracts</h2>
+      <p>A pixel has a temperature but no poverty rate. A tract has a poverty rate but holds thousands of pixels. The
+        bridge is zonal statistics: average every pixel inside each tract, for each of the three surfaces, and join
+        the three tables back to the tracts on their census code. The result is one row per tract carrying heat,
+        vegetation, built surface and vulnerability.</p>
+      <p>Of 1,765 Arizona tracts, 1,009 are in Maricopa County and 969 sit entirely inside the Landsat scene. Requiring
+        full containment means every average describes the whole tract, not whatever corner had data. Removing cloud
+        and the 17 tracts with no vulnerability score leaves <b>788</b>.</p>
+    </section>
+
+    <section class="prose-block">
+      <h2>The result that was backwards</h2>
+      <p>My first cloud mask dropped every pixel below 10 °C, since nothing in the Sonoran Desert is that cold at
+        midday. The correlations came out with two impossible signs: vegetation appeared to make the ground
+        <em>hotter</em>, and more vulnerable neighbourhoods appeared <em>cooler</em>.</p>
+      <p>Instead of reporting that, I went and looked at the tracts. Several showed 15 to 17 °C on bare desert. Cloud
+        tops sit near −40 °C, so the threshold caught the clouds, but the shadows they cast sit at 15 to 30 °C and walked
+        straight through. Landsat's QA band flags cloud and shadow for every pixel as bit-packed codes; decoded, 21824 is
+        clear land, 55052 and 22280 are cloud, 23888 and 23826 are shadow. Of the 154 tracts that read below 45 °C,
+        <b>140</b> were mostly cloud or shadow by the QA flags. The final mask uses the QA flags plus a plausibility
+        floor for the few shadows the QA band missed, and both signs flipped back.</p>
+    </section>
+
+    <table class="data">
+      <caption>Pearson r between tract means, before and after the cloud fix</caption>
+      <thead><tr><th>Relationship</th><th>Threshold only</th><th>QA mask</th></tr></thead>
+      <tbody>
+        <tr class="flag"><td>Heat and vegetation</td><td><b>+0.48</b></td><td>−0.18</td></tr>
+        <tr class="flag"><td>Heat and vulnerability</td><td><b>−0.37</b></td><td>−0.03</td></tr>
+        <tr><td>Heat and built-up surface</td><td>+0.05</td><td>+0.30</td></tr>
+      </tbody>
+    </table>
+
+    <section class="prose-block">
+      <p>A result that confirms what you expect gets less scrutiny than one that doesn't. That is exactly backwards,
+        and here the wrong answer happened to be the surprising one. Had shadows pushed the signs the other way, the
+        first pass would have looked fine.</p>
+    </section>
+
+    <section class="prose-block">
+      <h2>What the corrected data say</h2>
+      <p>I report both Pearson, which assumes a straight line, and Spearman, which only ranks and so copes with the skew
+        in these data. Where they disagree in size, Spearman is the better guide.</p>
+    </section>
+
+    <table class="data">
+      <caption>788 census tracts, Maricopa County</caption>
+      <thead><tr><th>Relationship</th><th>Pearson r</th><th>Spearman ρ</th><th>p (Pearson)</th></tr></thead>
+      <tbody>
+        <tr><td>Heat and built-up surface</td><td>+0.302</td><td>+0.483</td><td>&lt; 0.001</td></tr>
+        <tr><td>Heat and vegetation</td><td>−0.184</td><td>−0.392</td><td>&lt; 0.001</td></tr>
+        <tr class="flag"><td>Vulnerability and vegetation</td><td>−0.409</td><td>−0.444</td><td>&lt; 0.001</td></tr>
+        <tr><td>Vulnerability and built-up surface</td><td>+0.096</td><td>+0.151</td><td>0.007</td></tr>
+        <tr class="flag"><td>Vulnerability and heat</td><td>−0.029</td><td>+0.152</td><td>0.41</td></tr>
+      </tbody>
+    </table>
+
+    <figure class="fig wide">
+      <div class="deciles" id="scatter"></div>
+      <figcaption>
+        <span><b>Fig. 2</b> · Each dot is a tract. Left: the more vulnerable the tract, the less green it is. Right:
+          vulnerability tells you almost nothing about how hot the ground was. Orange dots are the 110 overlap tracts.
+          Hover a dot to find it on the map.</span>
+      </figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <h2>Vegetation follows vulnerability. Heat doesn't.</h2>
+      <p>Built-up surface is the strongest driver of surface temperature (ρ = +0.48), and vegetation cools (ρ = −0.39),
+        both in the direction the physics predicts and in line with the study I followed in Seville. The clearest social
+        finding is that <b>more vulnerable tracts have markedly less vegetation</b> (ρ = −0.44).</p>
+      <p>The most interesting result is the one that didn't appear. Across 788 tracts, vulnerability does not predict
+        surface temperature: Pearson r = −0.03, p = 0.41. The rank correlation is weakly positive (ρ = +0.15), but it
+        explains about 2% of the variation. In Seville the same comparison gave 0.35 during a heatwave. And the 110
+        tracts that are both highly vulnerable and least green average <b>60.1 °C</b> against a study mean of 61.1 °C,
+        slightly cooler, not hotter.</p>
+      <p>My explanation is a hypothesis, and I haven't tested it. Much of Phoenix's affluent growth sits on the desert
+        edge, in Scottsdale, Paradise Valley and north Phoenix, where bare ground runs extremely hot in daylight. In a
+        Mediterranean city, money buys trees and distance from the hot core; in a desert, the periphery is the hot part.
+        Checking whether vulnerability falls with distance from the centre would settle it.</p>
+      <p class="sheet-no">Limits</p>
+      <ul class="limits">
+        <li>One date. Nothing here generalises across seasons or years.</li>
+        <li>Surface temperature isn't air temperature, and 11:03 is mid-morning, not the daily peak. The values haven't
+          been checked against ground stations or NASA JPL's published Phoenix maps for July 2023.</li>
+        <li>The thermal sensor resolves 100 m, resampled to 30 m, so each pixel is an average of a larger patch than it
+          looks.</li>
+        <li>Tract averages erase what happens inside a tract: a shaded park next to a hot lot averages to something mild.</li>
+        <li>The vulnerability index comes from 2018–2022 survey estimates; the image is from 2023.</li>
+      </ul>
+      <p class="sheet-no">Next</p>
+      <ul class="limits">
+        <li>Night-time surface temperature from ECOSTRESS. Phoenix had 16 nights in a row that never dropped below 90 °F,
+          and in Seville the day and night patterns reversed.</li>
+        <li>A second, ordinary summer date to compare against the heatwave.</li>
+        <li>The distance-from-centre test for the null result.</li>
+      </ul>
+    </section>
+
+    <footer class="sources">
+      <p class="sheet-no">Sources</p>
+      <p>USGS Landsat 9 Collection 2 Level 2, scene LC09_L2SP_037037_20230724, bands SR_B4–B6, ST_B10 and QA_PIXEL ·
+        CDC/ATSDR Social Vulnerability Index 2022, Arizona census tracts · Heat record figures from the National Weather
+        Service, Phoenix · Method after Alnajjar, García Martínez, López Cabeza and Al Azhari (2025), <i>A Multidimensional
+        Approach to Mapping Urban Heat Vulnerability</i>, Smart Cities 8(4), 137. Map drawn on this page from the
+        project's tract table, in UTM zone 12N.</p>
+      <p><a class="back" href="../../#atlas">← Back to the Atlas</a></p>
+    </footer>
+  </main>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="../../sheet.js?v=2"></script>
+  <script src="../project.js"></script>
+  <script src="data.js"></script>
+  <script src="heat.js?v=2"></script>
+</body>
+</html>

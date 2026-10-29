@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../icons/4326-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../icons/4326-16.png" />
+  <link rel="apple-touch-icon" href="../../icons/4326-180.png" />
+  <title>Hydrotechnical Dashboard · Yamama Amir</title>
+  <meta name="description" content="A dashboard that shows, for every place a pipeline crosses a river, how high the water rises in a flood and how much ground is left over the pipe. Built at Earthbound AI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../project.css" />
+  <link rel="stylesheet" href="../app.css" />
+</head>
+<body class="app-page" data-sheet-label="GEOWEB APP I">
+  <canvas id="sheet" class="sheet" aria-hidden="true"></canvas>
+  <header class="top project-top">
+    <a class="back" href="../../#atlas">← Yamama Amir</a>
+    <nav>
+      <a href="../../#story">Story</a>
+      <a href="../../#atlas">Atlas</a>
+      <a class="boxed" href="../../#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="app">
+    <section class="app-hero">
+      <div>
+        <p class="eyebrow">Industry work · <b>pipeline integrity</b> · US river crossings</p>
+        <h1>Hydrotechnical Dashboard</h1>
+        <p class="lede">Where a pipeline runs under a river: how high the water gets, and how much ground is left over the pipe when it does.</p>
+        <div class="cta">
+          <a class="btn primary" href="#scenario">See a crossing ↓</a>
+        </div>
+        <dl class="facts">
+          <dt>Company</dt><dd>Earthbound AI, which models natural hazards for pipeline operators</dd>
+          <dt>Role</dt><dd>GIS engineer, primary developer</dd>
+          <dt>Years</dt><dd>2025–2026</dd>
+          <dt>Stack</dt><dd>React · Mapbox GL · FastAPI · DuckDB · GeoParquet on S3</dd>
+        </dl>
+      </div>
+      <figure class="appshot">
+        <div class="browser">
+          <div class="browser-bar"><i></i><i></i><i></i><span>hydrotechnical dashboard · scenario analysis</span></div>
+          <img src="img/scenario.jpg" alt="The scenario window for one river crossing: flow and velocity plotted against water level with the mean, two-year and ten-year levels marked, and below it a cross-section of the valley with water in the channel and the pipe drawn in red under the ground" width="2000" height="1152" />
+        </div>
+        <p class="cap">One real crossing. The crossing's name, line, river and coordinates are blurred.</p>
+      </figure>
+    </section>
+
+    <section class="brief">
+      <div>
+        <p class="eyebrow">The brief</p>
+        <h2>A pipe under a river is only as safe as the ground above it</h2>
+      </div>
+      <div>
+        <p>Pipelines cross thousands of rivers, buried under the bed. In a flood the water rises, runs faster and can
+          scour the bed away, and if enough of it goes the pipe is left exposed. Operators need to know which
+          crossings come close, before the flood rather than after.</p>
+        <p>Earthbound models every crossing in the network. The dashboard is where an engineer reads those models:
+          find a crossing on the map, open it, and see what happens to it as the water rises. I was the primary
+          developer, on the web app and on the services that feed it.</p>
+      </div>
+    </section>
+
+    <section class="wide" id="scenario">
+      <div class="wide-text">
+        <div>
+          <p class="eyebrow"><b>01</b> · Scenario analysis</p>
+          <h2>Raise the water, watch the cover</h2>
+        </div>
+        <div>
+          <p>The top chart is the river's rating: how much water flows, and how fast, at each water level. Three levels
+            are marked, the mean annual flow, the two-year flood and the ten-year maximum. Pick a level and the
+            cross-section below fills to it, with the ground, the channel and the pipe drawn along the crossing.
+            The badge reads off the shallowest cover left over the pipe at that level.</p>
+          <ul class="ticks">
+            <li><b>The preview strip</b> at the bottom left zooms the cross-section to any stretch of the crossing</li>
+            <li><b>Linear or log</b> scales for the rating chart, since flows span a few orders of magnitude</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="appshot">
+        <div class="browser">
+          <div class="browser-bar"><i></i><i></i><i></i><span>scenario analysis · cross-section</span></div>
+          <img src="img/section.jpg" alt="The crossing's cross-section at a water level of 27.2 feet: tan ground, blue water filling the channel, and the pipe as a thick red line dipping under the river bed, with a badge reading minimum depth of cover 9.1 feet" width="2000" height="781" loading="lazy" />
+        </div>
+        <p class="cap">At 27.2 feet of water, between the mean and the ten-year flood, the shallowest cover over the pipe is 9.1 feet.</p>
+      </figure>
+    </section>
+
+    <section class="handover">
+      <div>
+        <p class="eyebrow">Making it hold up</p>
+        <h2>Only what is on screen</h2>
+        <p>The crossings, their models and the network behind them live as GeoParquet files on S3. Rather than
+          loading a database, small FastAPI services query those files with DuckDB and send back only what is inside
+          the map view, so panning across the country stays quick. Caching the heaviest tables brought the API's cold
+          start down to about a second.</p>
+      </div>
+      <ul class="services">
+        <li>Crossing map<small>web app</small></li>
+        <li>Scenario analysis<small>web app</small></li>
+        <li>Cross-sections<small>web app and API</small></li>
+        <li>Spatial queries<small>FastAPI and DuckDB</small></li>
+      </ul>
+    </section>
+
+    <footer class="app-foot">
+      <p class="eyebrow">Credits</p>
+      <p>Built at Earthbound AI · React, TypeScript, Mapbox GL JS · FastAPI, DuckDB, GeoParquet on S3. The screenshot
+        is from the live app, with the crossing's identifiers and location blurred, along with one panel of figures.
+        The home page's version of this crossing is redrawn from its data.</p>
+      <p><a class="back" href="../../#atlas">← Back to the Atlas</a></p>
+    </footer>
+  </main>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="../../sheet.js?v=2"></script>
+  <script src="../project.js"></script>
+</body>
+</html>

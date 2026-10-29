@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../icons/4326-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../icons/4326-16.png" />
+  <link rel="apple-touch-icon" href="../../icons/4326-180.png" />
+  <title>3D Pipeline Viewer · Yamama Amir</title>
+  <meta name="description" content="A 3D viewer for a buried pipeline's terrain and route, checked against survey depths. Built at Earthbound AI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../project.css" />
+  <link rel="stylesheet" href="../app.css" />
+</head>
+<body class="app-page" data-sheet-label="GEOWEB APP II">
+  <canvas id="sheet" class="sheet" aria-hidden="true"></canvas>
+  <header class="top project-top">
+    <a class="back" href="../../#atlas">← Yamama Amir</a>
+    <nav>
+      <a href="../../#story">Story</a>
+      <a href="../../#atlas">Atlas</a>
+      <a class="boxed" href="../../#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="app">
+    <section class="app-hero">
+      <div>
+        <p class="eyebrow">Industry work · <b>pipeline integrity</b> · 3D terrain</p>
+        <h1>3D Pipeline Viewer</h1>
+        <p class="lede">A buried pipe is hard to picture on a flat map, so this one lets you turn the ground over and look.</p>
+        <div class="cta">
+          <a class="btn primary" href="#studio">See the studio ↓</a>
+        </div>
+        <dl class="facts">
+          <dt>Company</dt><dd>Earthbound AI, which models natural hazards for pipeline operators</dd>
+          <dt>Role</dt><dd>GIS engineer, primary developer</dd>
+          <dt>Years</dt><dd>2025–2026</dd>
+          <dt>Stack</dt><dd>React · React Three Fiber · Mapbox GL · FastAPI · DuckDB · GeoParquet on S3</dd>
+        </dl>
+      </div>
+      <figure class="appshot">
+        <div class="browser">
+          <div class="browser-bar"><i></i><i></i><i></i><span>pipeline viewer · studio</span></div>
+          <img src="img/studio.jpg" alt="A stretch of terrain in 3D, coloured by height, with a pale vertical curtain hanging along the pipe's route and the pipe drawn on it; an elevation profile chart compares the ground surface, the modelled pipe and measured depths; a controls panel sets layers, terrain style and vertical scale" width="2000" height="1062" />
+        </div>
+        <p class="cap">One stretch of line in studio mode. The stretch's name is blurred.</p>
+      </figure>
+    </section>
+
+    <section class="brief">
+      <div>
+        <p class="eyebrow">The brief</p>
+        <h2>Check the model against the ground</h2>
+      </div>
+      <div>
+        <p>Earthbound builds a model of where each pipe runs underground. Engineers need to see that model in its
+          real setting, against the hills and the river banks it passes under, and check it against the depths
+          surveyors actually measured. A profile line on a 2D map loses most of that.</p>
+        <p>The viewer loads a stretch of terrain and pipe as a 3D model you can turn. I was its primary developer.</p>
+      </div>
+    </section>
+
+    <section class="wide" id="studio">
+      <div class="wide-text">
+        <div>
+          <p class="eyebrow"><b>01</b> · Studio</p>
+          <h2>Terrain, pipe and the profile beside it</h2>
+        </div>
+        <div>
+          <p>The terrain is coloured by height, and a curtain hangs down along the pipe's route with the pipe drawn
+            on it, so you can see how deep it sits under each rise and dip. The chart beside it flattens the same
+            line into a profile: the ground surface in blue, the modelled pipe in orange, and the survey
+            measurements as dots, so a model that drifts from what was measured is easy to spot.</p>
+          <ul class="ticks">
+            <li><b>Layers</b> for terrain, pipe, a reference grid and water, each with its own opacity</li>
+            <li><b>Vertical exaggeration</b>, since a few feet of cover vanish at true scale over a long stretch</li>
+            <li><b>Terrain styles</b> from the height ramp to grass, dirt and rock, plus a wireframe</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="appshot">
+        <div class="browser">
+          <div class="browser-bar"><i></i><i></i><i></i><span>studio · model and profile</span></div>
+          <img src="img/model.jpg" alt="Close view of the 3D terrain coloured by height, the curtain along the pipe route with the pipe drawn on it, and the elevation profile comparing surface, modelled pipe and measurement dots" width="2000" height="778" loading="lazy" />
+        </div>
+        <p class="cap">The same stretch, closer. On the profile, the green survey dots sit close to the modelled pipe.</p>
+      </figure>
+    </section>
+
+    <section class="handover">
+      <div>
+        <p class="eyebrow">On the map</p>
+        <h2>From the whole network to one slope</h2>
+        <p>Studio mode shows a model on its own. Map mode sets the same 3D models onto a Mapbox map in their true
+          position, so an engineer can start from the whole network and fly down to a single crossing. The terrain
+          and pipe come from FastAPI services reading GeoParquet on S3 through DuckDB, the same services as the
+          hydrotechnical dashboard.</p>
+      </div>
+      <ul class="services">
+        <li>3D studio<small>React Three Fiber</small></li>
+        <li>Elevation profile<small>web app</small></li>
+        <li>Models on the map<small>Mapbox GL</small></li>
+        <li>Terrain and pipe data<small>FastAPI and DuckDB</small></li>
+      </ul>
+    </section>
+
+    <footer class="app-foot">
+      <p class="eyebrow">Credits</p>
+      <p>Built at Earthbound AI · React, TypeScript, React Three Fiber, Mapbox GL JS · FastAPI, DuckDB, GeoParquet on
+        S3. The screenshot is from the live app, with the stretch's name blurred.</p>
+      <p><a class="back" href="../../#atlas">← Back to the Atlas</a></p>
+    </footer>
+  </main>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="../../sheet.js?v=2"></script>
+  <script src="../project.js"></script>
+</body>
+</html>

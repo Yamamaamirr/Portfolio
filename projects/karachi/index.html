@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../icons/4326-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../icons/4326-16.png" />
+  <link rel="apple-touch-icon" href="../../icons/4326-180.png" />
+  <title>Karachi Stacked · Yamama Amir</title>
+  <meta name="description" content="How Karachi absorbed nine and a half million more people between 2000 and 2020 while adding only a fifth more building footprint." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../project.css" />
+</head>
+<body class="project">
+  <canvas id="sheet" class="sheet" aria-hidden="true"></canvas>
+
+  <header class="top project-top">
+    <a class="back" href="../../#atlas">← Yamama Amir</a>
+    <nav>
+      <a href="../../#story">Story</a>
+      <a href="../../#atlas">Atlas</a>
+      <a class="boxed" href="../../#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="case">
+    <p class="sheet-no">Plate IV · Urban growth · 2000–2020</p>
+    <h1>Karachi, the City That Stacked</h1>
+    <p class="lede">Nine and a half million more people in twenty years, and only a fifth more building to hold them.</p>
+
+    <p class="meta">Monitoring Cities · NYU · Prof. Masoud Ghandehari<span class="sep"> &nbsp;|&nbsp; </span><span class="tools">Google Earth Engine · GHS-POP · GHS-BUILT-S</span></p>
+
+    <dl class="stats-row">
+      <div><dt>Population</dt><dd>+72% <small>13.2 → 22.8 M</small></dd></div>
+      <div><dt>Building footprint</dt><dd>+20% <small>197 → 237 km²</small></dd></div>
+      <div><dt>People per km² of footprint</dt><dd>+43% <small>67,100 → 95,800</small></dd></div>
+      <div><dt>Growth in every district</dt><dd>72–74%</dd></div>
+    </dl>
+
+    <section class="prose-block">
+      <p>Karachi's population roughly doubled between 2000 and 2020. That much is well known. Gridded population
+        data lets you ask a sharper question: did the city build enough to house those people, or did it fit them
+        into the buildings it already had?</p>
+      <p>The answer matters because the two put very different demands on a city. New neighbourhoods need new roads,
+        pipes and schools; crowding into old ones strains the water, transport and services that are already there.
+        I compared two layers from the EU's Global Human Settlement Layer for Karachi Division, the five districts
+        of the city and its hinterland: <b>GHS-POP</b>, residents per 100 m cell, and <b>GHS-BUILT-S</b>, square
+        metres of building footprint in the same cells.</p>
+    </section>
+
+    <figure class="fig wide">
+      <div class="swipe" style="--pos: 50%">
+        <img src="img/pop_2020.jpg" alt="Residents per 100 metre cell in Karachi Division, 2020" width="1700" height="926" loading="lazy" />
+        <div class="swipe-top"><img src="img/pop_2000.jpg" alt="Residents per 100 metre cell in Karachi Division, 2000" width="1700" height="926" loading="lazy" /></div>
+        <div class="swipe-line" aria-hidden="true"><span>⟷</span></div>
+        <span class="swipe-tag left">← 2000 · 13.2 M</span>
+        <span class="swipe-tag right later">2020 · 22.8 M →</span>
+        <input type="range" min="0" max="100" value="50" step="0.1" aria-label="Drag to compare 2000 with 2020" />
+      </div>
+      <figcaption>
+        <span><b>Fig. 1</b> · Residents per 100 m cell, 2000 and 2020, on one scale. Drag the arrow right towards 2020, left towards 2000.
+          The outline is Karachi Division, with its district boundaries inside. The colour scale tops out at
+          300 people per cell, so the densest districts are solid in both years.</span>
+        <span class="legend-ramp">0 <i></i> 300+</span>
+      </figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <h2>Where the growth landed</h2>
+      <p>Subtracting 2000 from 2020, cell by cell, shows the change. Every district grew by between 72 and 74 percent,
+        and almost nowhere lost people. The heaviest gains, more than 300 extra people per cell, fall inside the
+        districts that were already the densest in 2000, not on the open land around them. The city's edge moved
+        out only a little, in thin bands to the north and east.</p>
+    </section>
+
+    <figure class="fig wide">
+      <img src="img/pop_change.jpg" alt="Map of population change, 2000 to 2020: the largest gains in the dense central districts, smaller gains on the northern and eastern edges" width="1700" height="943" loading="lazy" />
+      <figcaption>
+        <span><b>Fig. 2</b> · Change in residents per 100 m cell, 2020 minus 2000. Water is masked out.</span>
+        <span class="legend-cls">
+          <span><i style="background:#4f7fa8"></i>Loss, &lt; −20</span>
+          <span><i style="background:#fbf8ee"></i>Stable, ±20</span>
+          <span><i style="background:#efc9a0"></i>+20 to 100</span>
+          <span><i style="background:#c8782f"></i>+100 to 300</span>
+          <span><i style="background:#6e3510"></i>&gt; +300</span>
+        </span>
+      </figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <h2>Stacked, not spread</h2>
+      <p>GHS-BUILT-S measures building footprint: the area under roofs, not the floor space inside. Over the same
+        twenty years it grew by only 20 percent, from 197 to 237 km². For every new square kilometre of roof, Karachi
+        took in roughly a quarter of a million people, and the number of residents per square kilometre of footprint
+        rose from 67,100 to 95,800.</p>
+      <p>The same pattern holds in every one of eleven neighbourhoods I sampled, each a 2 km circle around its
+        approximate centre. In the old core, population grew by 60 to 73 percent while footprint barely moved. Even
+        on the fringes, where most of the new building went up, people still outpaced roofs.</p>
+    </section>
+
+    <figure class="fig">
+      <table class="pairs growth-pairs">
+        <caption>Growth, 2000 → 2020, within 2 km of each neighbourhood centre</caption>
+        <tbody>
+          <tr><th>North Nazimabad</th><td><i class="pop" style="--w: 75.3%"></i><i class="fp" style="--w: 3.2%"></i><span>+70% · +3%</span></td></tr>
+          <tr><th>Lyari</th><td><i class="pop" style="--w: 64.5%"></i><i class="fp" style="--w: 5.4%"></i><span>+60% · +5%</span></td></tr>
+          <tr><th>Gulshan-e-Iqbal</th><td><i class="pop" style="--w: 73.1%"></i><i class="fp" style="--w: 6.5%"></i><span>+68% · +6%</span></td></tr>
+          <tr><th>Orangi Town</th><td><i class="pop" style="--w: 57%"></i><i class="fp" style="--w: 6.5%"></i><span>+53% · +6%</span></td></tr>
+          <tr><th>Korangi</th><td><i class="pop" style="--w: 75.3%"></i><i class="fp" style="--w: 8.6%"></i><span>+70% · +8%</span></td></tr>
+          <tr><th>Saddar</th><td><i class="pop" style="--w: 78.5%"></i><i class="fp" style="--w: 9.7%"></i><span>+73% · +9%</span></td></tr>
+          <tr><th>Landhi</th><td><i class="pop" style="--w: 61.3%"></i><i class="fp" style="--w: 12.9%"></i><span>+57% · +12%</span></td></tr>
+          <tr><th>DHA and Clifton</th><td><i class="pop" style="--w: 78.5%"></i><i class="fp" style="--w: 12.9%"></i><span>+73% · +12%</span></td></tr>
+          <tr><th>Bin Qasim</th><td><i class="pop" style="--w: 65.6%"></i><i class="fp" style="--w: 29%"></i><span>+61% · +27%</span></td></tr>
+          <tr><th>Surjani Town</th><td><i class="pop" style="--w: 100%"></i><i class="fp" style="--w: 34.4%"></i><span>+93% · +32%</span></td></tr>
+          <tr><th>Scheme 33</th><td><i class="pop" style="--w: 96.8%"></i><i class="fp" style="--w: 53.8%"></i><span>+90% · +50%</span></td></tr>
+        </tbody>
+      </table>
+      <figcaption>
+        <span><b>Fig. 3</b> · Population growth against building-footprint growth, ordered by footprint growth. The
+          older, central neighbourhoods sit at the top; the newer fringe schemes at the bottom.</span>
+        <span class="legend-div"><i class="popk"></i>population<i class="fpk"></i>footprint</span>
+      </figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <p>The growth also sped up. Between 2015 and 2020 alone, Karachi Division gained about four million residents
+        while its footprint grew by roughly seven square kilometres.</p>
+    </section>
+
+    <figure class="fig wide">
+      <div class="growth" id="growth"></div>
+      <figcaption>
+        <span><b>Fig. 4</b> · Total residents of Karachi Division in each five-year GHS-POP epoch, 1975 to 2020. GHSL's
+          2025 and 2030 layers are projections and are left out.</span>
+      </figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <h2>Why it stacked</h2>
+      <p>The data shows the pattern, not its causes, but a few explanations fit it. Karachi is Pakistan's largest
+        city and its economic centre, and migrants have arrived faster than housing could be built. Existing housing
+        absorbed the difference: plots subdivided, more households sharing a unit, extra storeys added. Because the
+        footprint layer records roof area rather than floor area, none of these register as new building, which is
+        exactly what the maps show. And the open land at the edge is arid and poorly served by water and transport,
+        so new schemes there have grown, but nowhere near fast enough to take the increase.</p>
+      <p>One caution. GHS-POP is not a head count: it spreads census totals across each area using the built-up
+        layers, so its finest detail partly follows the buildings. The totals, and the gap between people and roofs,
+        are the robust part.</p>
+    </section>
+
+    <footer class="sources">
+      <p class="sheet-no">Sources</p>
+      <p>Schiavina, Freire, Carioli &amp; MacManus (2023), GHS-POP R2023A, European Commission JRC · Pesaresi &amp;
+        Politis (2023), GHS-BUILT-S R2023A, European Commission JRC · FAO GAUL 2015, level 2 (Karachi Central, East,
+        South, West and Malir; GAUL has no Korangi or Keamari, which fall inside East and West) · CGIAR SRTM 90 m v4,
+        used as a land mask · Gorelick et al. (2017), Google Earth Engine. Maps exported from Earth Engine and
+        recoloured for this page; totals summed from 1 km cells.</p>
+      <p><a class="back" href="../../#atlas">← Back to the Atlas</a></p>
+    </footer>
+  </main>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="../../sheet.js?v=2"></script>
+  <script src="../project.js"></script>
+  <script src="karachi.js"></script>
+</body>
+</html>

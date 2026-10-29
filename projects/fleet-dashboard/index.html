@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../icons/4326-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../icons/4326-16.png" />
+  <link rel="apple-touch-icon" href="../../icons/4326-180.png" />
+  <title>Fleet Dashboard · Yamama Amir</title>
+  <meta name="description" content="A live tracking, route history and campaign-proof dashboard for a fleet of mobile billboard trucks, built at Adgile Media Group." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../project.css" />
+  <link rel="stylesheet" href="../app.css" />
+</head>
+<body class="app-page" data-sheet-label="GEOWEB APP IV">
+  <canvas id="sheet" class="sheet" aria-hidden="true"></canvas>
+  <header class="top project-top">
+    <a class="back" href="../../#atlas">← Yamama Amir</a>
+    <nav>
+      <a href="../../#story">Story</a>
+      <a href="../../#atlas">Atlas</a>
+      <a class="boxed" href="../../#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="app">
+    <section class="app-hero">
+      <div>
+        <p class="eyebrow">Industry work · <b>out-of-home advertising</b> · US metros</p>
+        <h1>Fleet Dashboard</h1>
+        <p class="lede">Where every billboard truck is now, where it has been, and proof for the advertiser that it was there.</p>
+        <div class="cta">
+          <a class="btn primary" href="#geofence">See the geofence ↓</a>
+          <a class="btn" href="#how">How it works ↓</a>
+        </div>
+        <dl class="facts">
+          <dt>Company</dt><dd>Adgile Media Group, which runs advertising on trucks</dd>
+          <dt>Role</dt><dd>Geospatial software engineer, one of two engineers on the platform</dd>
+          <dt>Years</dt><dd>2025–2026</dd>
+          <dt>Stack</dt><dd>React · Mapbox GL · NestJS · PostgreSQL + PostGIS · Firebase · Google Cloud</dd>
+        </dl>
+      </div>
+      <figure class="appshot">
+        <div class="browser">
+          <div class="browser-bar"><i></i><i></i><i></i><span>fleet dashboard · live map</span></div>
+          <img src="img/live.jpg" alt="The live map: the app's sidebar, a list of truck cards with speed, mileage, campaign and market, and truck markers across the United States, grey when parked and blue on a live campaign" width="2000" height="1041" />
+        </div>
+        <p class="cap">The live map. Names, device ids, addresses and campaigns are blurred throughout this page.</p>
+      </figure>
+    </section>
+
+    <section class="brief">
+      <div>
+        <p class="eyebrow">The brief</p>
+        <h2>Advertisers pay to be seen, so prove it</h2>
+      </div>
+      <div>
+        <p>Adgile wraps box trucks in a brand's advertising and drives them through the streets of US cities on planned
+          routes. A GPS unit on each truck reports its position, speed, battery and signal all day long.
+          On their own those pings are just noise; the business needs them answered as questions. Where is each truck
+          right now? Did it drive the route the client paid for? How many people could have seen it, and where?</p>
+        <p>The dashboard is where staff ask those questions. I worked on it from the first commit, on both the web app
+          and the API behind it, alongside one other engineer: the live map, route history, geofencing, the fleet
+          health tab, the CRM sync and truck availability are the parts I built and describe here.</p>
+      </div>
+    </section>
+
+    <section class="wide">
+      <div class="wide-text">
+        <div>
+          <p class="eyebrow"><b>01</b> · Route history and impressions</p>
+          <h2>Replay any week, for any truck</h2>
+        </div>
+        <div>
+          <p>Pick a date range and any set of trucks, by name, campaign or city, and their routes come back snapped to
+            the street network. Each dot is an impression point: a moment where a measurement partner counted the
+            people who could see the truck, and every one opens a card with its numbers. Every query becomes a layer on
+            the right, with its own colour and opacity, so several can be compared, hidden or exported.</p>
+          <ul class="ticks">
+            <li><b>Upload planned routes</b> as GPX or CSV, several files at once, to lay the plan over what was driven</li>
+            <li><b>The map fits itself</b> to wherever the trucks went, even when a campaign runs in several cities</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="appshot">
+        <div class="browser">
+          <div class="browser-bar"><i></i><i></i><i></i><span>fleet dashboard · routes</span></div>
+          <img src="img/routes.jpg" alt="Routes view over east Los Angeles: a week of routes for ten trucks drawn as chains of dark blue impression points along the streets, with the query panel on the left and the layer list on the right" width="2000" height="1041" loading="lazy" />
+        </div>
+        <p class="cap">Ten trucks over one week in Los Angeles, with one impression point's card open.</p>
+      </figure>
+    </section>
+
+    <section class="wide" id="geofence">
+      <div class="wide-text">
+        <div>
+          <p class="eyebrow"><b>02</b> · Geofencing</p>
+          <h2>Draw a shape, get the campaign inside it</h2>
+        </div>
+        <div>
+          <p>Clients often care about one neighbourhood, a stadium or a stretch of avenue, not the whole day's drive.
+            Staff draw a polygon on the map and the API clips every road-matched route to it in PostGIS, in one query.
+            Inside the shape, routes turn orange and GPS points red; outside they stay blue. A statistics table then
+            totals the trucks, impressions and days of operation inside, ready to export as CSV or Excel.</p>
+          <ul class="ticks">
+            <li><b>Hand-drawn shapes cross themselves</b>, so each is checked and repaired before it touches a query</li>
+            <li><b>Truck and campaign details are copied onto each route</b> when it is written, so the clip needs no joins and stays fast</li>
+            <li><b>Exports stream</b> row by row, so a whole campaign downloads instead of stopping at a row cap</li>
+          </ul>
+        </div>
+      </div>
+      <div class="appshot-pair">
+        <figure class="appshot">
+          <div class="browser">
+            <div class="browser-bar"><i></i><i></i><i></i><span>fleet dashboard · routes · geofence</span></div>
+            <img src="img/geofence.jpg" alt="A geofence polygon drawn over Monterey Park and Montebello: routes inside are orange with red GPS points, routes outside stay blue" width="2000" height="1041" loading="lazy" />
+          </div>
+          <p class="cap">A polygon over Montebello and Monterey Park, queried across every truck for a week.</p>
+        </figure>
+        <figure class="appshot">
+          <div class="browser">
+            <div class="browser-bar"><i></i><i></i><i></i><span>fleet dashboard · geofence statistics</span></div>
+            <img src="img/stats.jpg" alt="Geofence statistics: totals for devices, impressions, daily average and operation days, a per-truck table, and CSV and Excel export buttons" width="2000" height="1041" loading="lazy" />
+          </div>
+          <p class="cap">The statistics for that shape, per truck.</p>
+        </figure>
+      </div>
+    </section>
+
+    <section class="feature fence-try">
+      <figure class="fence-demo">
+        <div class="browser">
+          <div class="browser-bar"><i></i><i></i><i></i><span>try it · a geofence on made-up routes</span></div>
+          <canvas id="fence" aria-label="Three made-up truck routes on a street grid, clipped to an orange shape you can drag"></canvas>
+        </div>
+        <div class="fence-under">
+          <table class="fence-read" id="fence-read">
+            <thead><tr><th></th><th>Inside</th><th>Of route</th><th>Impressions</th></tr></thead>
+            <tbody>
+              <tr><td><i style="background:#1f4e79"></i>Truck A</td><td></td><td></td><td></td></tr>
+              <tr><td><i style="background:#c8782f"></i>Truck B</td><td></td><td></td><td></td></tr>
+              <tr><td><i style="background:#4f7fa8"></i>Truck C</td><td></td><td></td><td></td></tr>
+              <tr class="tot"><td>All</td><td></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+          <button class="btn fence-reset" id="fence-reset" type="button">Reset shape</button>
+        </div>
+      </figure>
+      <div class="feature-text">
+        <p class="eyebrow">Try it</p>
+        <h2>The same clip, in your hands</h2>
+        <p>Drag the orange shape, or any of its corners. The three routes are cut to it the way the dashboard's query
+          cuts real ones, and the table adds up the distance and impressions inside. The routes and numbers here are
+          made up.</p>
+      </div>
+    </section>
+
+    <section class="wide">
+      <div class="wide-text">
+        <div>
+          <p class="eyebrow"><b>03</b> · Fleet health</p>
+          <h2>Find the truck that went quiet</h2>
+        </div>
+        <div>
+          <p>A truck with a flat tracker is a campaign with a hole in its proof. The health tab sorts every device into
+            online, warning and offline, beside its last report, battery, signal, ignition and satellite count, so a
+            dead unit can be caught while the campaign is still running. It splits the fleet into assigned devices,
+            spare inventory and devices on live campaigns, searches across every field, and exports.</p>
+        </div>
+      </div>
+      <figure class="appshot">
+        <div class="browser">
+          <div class="browser-bar"><i></i><i></i><i></i><span>fleet dashboard · health</span></div>
+          <img src="img/health.jpg" alt="Device health: counts of online, offline and warning devices and a table of devices with status, last seen, battery, signal, ignition and satellites" width="2000" height="1041" loading="lazy" />
+        </div>
+      </figure>
+    </section>
+
+    <section class="feature flip">
+      <figure class="appshot">
+        <div class="browser">
+          <div class="browser-bar"><i></i><i></i><i></i><span>fleet dashboard · truck availability</span></div>
+          <img src="img/availability.jpg" alt="Truck availability results for Los Angeles: 56 trucks available against 5 requested, marked fulfillable, with each truck's wrap dimensions, connectivity and 30-day impressions rank" width="2000" height="1041" loading="lazy" />
+        </div>
+      </figure>
+      <div class="feature-text">
+        <p class="eyebrow"><b>04</b> · Truck availability</p>
+        <h2>Can we take this campaign?</h2>
+        <p>When a client asks for, say, five trucks in Los Angeles next week, the answer is spread across trucks and
+          deals in the CRM. Sales enter the city, the dates and the number of trucks. The API takes every truck in that
+          city marked ready to use, removes any truck already booked on a deal whose dates overlap, and says whether
+          the request can be filled.</p>
+        <ul class="ticks">
+          <li><b>Ranked by recent reach:</b> each free truck carries its impressions over the last 30 days</li>
+          <li><b>Wrap dimensions</b> for every truck, side, rear and over the cab, beside the result</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="wide">
+      <div class="wide-text">
+        <div>
+          <p class="eyebrow"><b>05</b> · Also in the app</p>
+          <h2>Audits that keep the CRM honest</h2>
+        </div>
+        <div>
+          <p>Two more tools in the same app, which my colleague led: an install check that lists every live campaign
+            whose trucks have no installation booked, and a sync that keeps truck names in the CRM and the tracking
+            system the same, logging every change and every failure.</p>
+        </div>
+      </div>
+      <div class="appshot-pair">
+        <figure class="appshot">
+          <div class="browser">
+            <div class="browser-bar"><i></i><i></i><i></i><span>fleet dashboard · install check</span></div>
+            <img src="img/install.jpg" alt="Install checker: totals for deals, missing installs, missing trucks and covered trucks, and a list of campaigns with how many of their trucks are covered" width="2000" height="1041" loading="lazy" />
+          </div>
+        </figure>
+        <figure class="appshot">
+          <div class="browser">
+            <div class="browser-bar"><i></i><i></i><i></i><span>fleet dashboard · sync history</span></div>
+            <img src="img/sync.jpg" alt="Truck name sync history: a log of syncs with timestamps, success or error status, and the reason for each error" width="2000" height="1041" loading="lazy" />
+          </div>
+        </figure>
+      </div>
+    </section>
+    <section class="how-panel" id="how">
+      <div class="how-head">
+        <div>
+          <p class="eyebrow">How it works</p>
+          <h2>Four streams, one dashboard</h2>
+          <p>Four kinds of data arrive at different speeds, from seconds to once a night. Follow a colour from where it
+            starts on the left to the screen staff use on the right.</p>
+        </div>
+        <ul class="flow-key">
+          <li><i class="k1">1</i>Live position</li>
+          <li><i class="k2">2</i>Route history</li>
+          <li><i class="k3">3</i>Impressions</li>
+          <li><i class="k4">4</i>Bookings</li>
+        </ul>
+      </div>
+      <svg class="arch-svg" viewBox="0 0 1220 560" role="img" aria-labelledby="arch-t">
+<title id="arch-t">How the fleet dashboard works: four colour-coded flows from trucks, a measurement partner and the CRM, through the API and databases, to the dashboard's views</title>
+<defs>
+<marker id="a1f4e79" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f4e79"/></marker>
+<marker id="ac8782f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c8782f"/></marker>
+<marker id="a4f7fa8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4f7fa8"/></marker>
+<marker id="a141414" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#141414"/></marker>
+</defs>
+<text x="20" y="22" class="d-tier">Sources</text>
+<line x1="20" x2="200" y1="32" y2="32" class="d-tier-rule"/>
+<text x="330" y="22" class="d-tier">API · Cloud Run</text>
+<line x1="330" x2="540" y1="32" y2="32" class="d-tier-rule"/>
+<text x="670" y="22" class="d-tier">Data</text>
+<line x1="670" x2="870" y1="32" y2="32" class="d-tier-rule"/>
+<text x="1000" y="22" class="d-tier">Dashboard</text>
+<line x1="1000" x2="1196" y1="32" y2="32" class="d-tier-rule"/>
+<rect x="20" y="70" width="180" height="120" rx="10" class="d-box d-people"/>
+<text x="34" y="95" class="d-title">Trucks</text>
+<text x="34" y="116" class="d-sub">a GPS unit on each,</text>
+<text x="34" y="132" class="d-sub">reporting all day</text>
+<text x="34" y="148" class="d-sub">through Flespi</text>
+<rect x="20" y="250" width="180" height="90" rx="10" class="d-box d-people"/>
+<text x="34" y="275" class="d-title">Measurement</text>
+<text x="34" y="291" class="d-title">partner</text>
+<text x="34" y="312" class="d-sub">impression files, nightly</text>
+<rect x="20" y="410" width="180" height="100" rx="10" class="d-box d-people"/>
+<text x="34" y="435" class="d-title">HubSpot CRM</text>
+<text x="34" y="456" class="d-sub">trucks, deals,</text>
+<text x="34" y="472" class="d-sub">campaign dates</text>
+<rect x="330" y="70" width="210" height="440" rx="10" class="d-box"/>
+<text x="344" y="95" class="d-title">NestJS API</text>
+<text x="344" y="116" class="d-sub">TypeScript</text>
+<text x="344" y="150" class="d-sub">Webhook listener:</text>
+<text x="344" y="166" class="d-sub">buffers pings and writes</text>
+<text x="344" y="182" class="d-sub">them in batches.</text>
+<text x="344" y="216" class="d-sub">Geofence, statistics</text>
+<text x="344" y="232" class="d-sub">and streaming exports.</text>
+<text x="344" y="266" class="d-sub">Nightly impression</text>
+<text x="344" y="282" class="d-sub">ingest, matched to pings</text>
+<text x="344" y="298" class="d-sub">by truck and time.</text>
+<text x="344" y="332" class="d-sub">CRM sync and the</text>
+<text x="344" y="348" class="d-sub">availability search.</text>
+<text x="344" y="382" class="d-sub">Every request checks</text>
+<text x="344" y="398" class="d-sub">the staff login.</text>
+<rect x="670" y="70" width="200" height="80" rx="10" class="d-box"/>
+<text x="684" y="95" class="d-title">Firestore</text>
+<text x="684" y="116" class="d-sub">latest state per truck,</text>
+<text x="684" y="132" class="d-sub">pushed live to browsers</text>
+<rect x="670" y="190" width="200" height="150" rx="10" class="d-box"/>
+<text x="684" y="215" class="d-title">PostgreSQL + PostGIS</text>
+<text x="684" y="236" class="d-sub">every ping, kept</text>
+<text x="684" y="252" class="d-sub">road-matched routes</text>
+<text x="684" y="268" class="d-sub">served as vector tiles</text>
+<rect x="670" y="380" width="200" height="70" rx="10" class="d-box"/>
+<text x="684" y="405" class="d-title">OSRM</text>
+<text x="684" y="426" class="d-sub">snaps pings to roads</text>
+<rect x="1000" y="70" width="196" height="70" rx="10" class="d-box"/>
+<text x="1014" y="95" class="d-title">Live map</text>
+<text x="1014" y="116" class="d-sub">every truck, now</text>
+<rect x="1000" y="170" width="196" height="70" rx="10" class="d-box"/>
+<text x="1014" y="195" class="d-title">Health</text>
+<text x="1014" y="216" class="d-sub">online · warning · offline</text>
+<rect x="1000" y="270" width="196" height="90" rx="10" class="d-box"/>
+<text x="1014" y="295" class="d-title">Routes</text>
+<text x="1014" y="316" class="d-sub">history, impressions,</text>
+<text x="1014" y="332" class="d-sub">geofence, exports</text>
+<rect x="1000" y="420" width="196" height="70" rx="10" class="d-box"/>
+<text x="1014" y="445" class="d-title">Availability</text>
+<text x="1014" y="466" class="d-sub">free trucks by city</text>
+<path d="M200,100 L328,100" class="d-flow" stroke="#1f4e79" marker-end="url(#a1f4e79)"/>
+<circle cx="216" cy="100" r="9" fill="#1f4e79"/><text x="216" y="104" class="d-num">1</text>
+<text x="272" y="90" class="d-label" style="text-anchor:middle" fill="#1f4e79">pings</text>
+<path d="M540,100 L668,100" class="d-flow" stroke="#1f4e79" marker-end="url(#a1f4e79)"/>
+<text x="605" y="90" class="d-label" style="text-anchor:middle" fill="#1f4e79">latest state</text>
+<path d="M870,100 L998,100" class="d-flow" stroke="#1f4e79" marker-end="url(#a1f4e79)"/>
+<text x="935" y="90" class="d-label" style="text-anchor:middle" fill="#1f4e79">realtime</text>
+<path d="M870,130 L930,130 L930,200 L998,200" class="d-flow" stroke="#1f4e79" marker-end="url(#a1f4e79)"/>
+<path d="M200,160 L280,160 L280,215 L328,215" class="d-flow" stroke="#c8782f" marker-end="url(#ac8782f)"/>
+<circle cx="216" cy="160" r="9" fill="#c8782f"/><text x="216" y="164" class="d-num">2</text>
+<path d="M540,215 L668,215" class="d-flow" stroke="#c8782f" marker-end="url(#ac8782f)"/>
+<text x="605" y="205" class="d-label" style="text-anchor:middle" fill="#c8782f">every ping, batched</text>
+<path d="M740,340 L740,378" class="d-flow" stroke="#c8782f" marker-end="url(#ac8782f)"/>
+<path d="M800,380 L800,342" class="d-flow" stroke="#c8782f" marker-end="url(#ac8782f)"/>
+<text x="810" y="365" class="d-label" style="text-anchor:start" fill="#c8782f">matched</text>
+<path d="M870,300 L998,300" class="d-flow" stroke="#c8782f" marker-end="url(#ac8782f)"/>
+<text x="935" y="290" class="d-label" style="text-anchor:middle" fill="#c8782f">tiles · clips</text>
+<path d="M200,300 L328,300" class="d-flow" stroke="#4f7fa8" stroke-dasharray="5 4" marker-end="url(#a4f7fa8)"/>
+<circle cx="216" cy="300" r="9" fill="#4f7fa8"/><text x="216" y="304" class="d-num">3</text>
+<text x="275" y="290" class="d-label" style="text-anchor:middle" fill="#4f7fa8">parquet</text>
+<path d="M540,290 L600,290 L600,260 L668,260" class="d-flow" stroke="#4f7fa8" stroke-dasharray="5 4" marker-end="url(#a4f7fa8)"/>
+<text x="608" y="282" class="d-label" style="text-anchor:start" fill="#4f7fa8">onto pings</text>
+<path d="M200,450 L328,450" class="d-flow" stroke="#141414" marker-end="url(#a141414)"/>
+<circle cx="216" cy="450" r="9" fill="#141414"/><text x="216" y="454" class="d-num">4</text>
+<text x="275" y="440" class="d-label" style="text-anchor:middle" fill="#141414">deals · trucks</text>
+<path d="M540,470 L998,470" class="d-flow" stroke="#141414" marker-end="url(#a141414)"/>
+<text x="605" y="460" class="d-label" style="text-anchor:middle" fill="#141414">free trucks</text>
+<path d="M540,330 L640,330 L640,320 L668,320" class="d-flow" stroke="#141414" marker-end="url(#a141414)"/>
+<text x="560" y="350" class="d-label" style="text-anchor:start" fill="#141414">campaign dates</text>
+</svg>
+      <ol class="flows-mobile">
+        <li><h3><i class="flow-key-dot k1">1</i>Live position</h3>
+          <div class="steps"><span>Trucks</span><em>→</em><span>API</span><em>→</em><span>Firestore</span><em>→</em><span>Live map · Health</span></div>
+          <p>Each truck's latest state is pushed to every open browser.</p></li>
+        <li><h3><i class="flow-key-dot k2">2</i>Route history</h3>
+          <div class="steps"><span>Trucks</span><em>→</em><span>API</span><em>→</em><span>PostGIS</span><em>⇄</em><span>OSRM</span><em>→</em><span>Routes</span></div>
+          <p>Every ping is kept, snapped to roads and served as map tiles.</p></li>
+        <li><h3><i class="flow-key-dot k3">3</i>Impressions</h3>
+          <div class="steps"><span>Partner</span><em>→</em><span>API</span><em>→</em><span>PostGIS</span></div>
+          <p>Nightly files are matched to pings by truck and time.</p></li>
+        <li><h3><i class="flow-key-dot k4">4</i>Bookings</h3>
+          <div class="steps"><span>HubSpot</span><em>→</em><span>API</span><em>→</em><span>Availability</span></div>
+          <p>Trucks and deals come from the CRM; campaign dates are copied onto routes.</p></li>
+      </ol>
+    </section>
+
+    <section class="handover">
+      <div>
+        <p class="eyebrow">Making it hold up</p>
+        <h2>Months of pings, answered in seconds</h2>
+        <p>A fleet reporting all day piles up rows quickly, and staff ask for whole campaigns at once. The
+          slow requests were the ones people needed most, and a lot of my later work went into them: indexes the
+          API checks for and creates when it starts, a time limit on heavy statistics queries so a bad request fails
+          cleanly instead of hanging, and an Excel export that streams rows as they are read, so a campaign's raw
+          pings download in full instead of stopping at a row cap.</p>
+      </div>
+      <ul class="services">
+        <li>Live map<small>web app</small></li>
+        <li>Route history &amp; GPX<small>web app</small></li>
+        <li>Geofencing<small>web app and API</small></li>
+        <li>Fleet health<small>web app</small></li>
+        <li>HubSpot sync<small>API</small></li>
+        <li>Truck availability<small>web app and API</small></li>
+      </ul>
+    </section>
+
+    <footer class="app-foot">
+      <p class="eyebrow">Credits</p>
+      <p>Built at Adgile Media Group with one other engineer, who led the map-matching, the vector tile service and
+        the nightly impression ingest · React 19, TypeScript, Vite, Tailwind, Mapbox GL JS · NestJS, PostgreSQL and
+        PostGIS, Firebase · OSRM · Google Cloud Run, Cloud SQL, Pub/Sub. Screenshots are from the live dashboard, with
+        truck, client and campaign details blurred; the interactive geofence uses made-up routes.</p>
+      <p><a class="back" href="../../#atlas">← Back to the Atlas</a></p>
+    </footer>
+  </main>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="../../sheet.js?v=2"></script>
+  <script src="../project.js"></script>
+  <script src="fleet.js?v=2"></script>
+</body>
+</html>

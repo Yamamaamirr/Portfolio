@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../icons/4326-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../icons/4326-16.png" />
+  <link rel="apple-touch-icon" href="../../icons/4326-180.png" />
+  <title>Mapping the Accessibility Gap · Yamama Amir</title>
+  <meta name="description" content="Where New York's subway accessibility gap falls on residents with disabilities, tract by tract, and which ten station upgrades would close the most of it." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../project.css" />
+</head>
+<body class="project">
+  <canvas id="sheet" class="sheet" aria-hidden="true"></canvas>
+
+  <header class="top project-top">
+    <a class="back" href="../../#atlas">← Yamama Amir</a>
+    <nav>
+      <a href="../../#story">Story</a>
+      <a href="../../#atlas">Atlas</a>
+      <a class="boxed" href="../../#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="case">
+    <p class="sheet-no">Plate V · Spatial statistics · New York City, 2024</p>
+    <h1>Mapping the accessibility gap</h1>
+    <p class="lede">A third of New York's subway stations have step-free access. Where does the rest of the system leave
+      people with disabilities, and which stations should get elevators next?</p>
+
+    <p class="meta">Urban Computing Skills Lab · Final project<span class="sep"> &nbsp;|&nbsp; </span><span class="tools">Python · GeoPandas · PySAL · spreg · statsmodels</span></p>
+
+    <dl class="stats-row">
+      <div><dt>Spatial clustering of the gap</dt><dd>I = 0.70 <small>p = 0.001</small></dd></div>
+      <div><dt>Residents with a disability in hot spots</dt><dd>112,151</dd></div>
+      <div><dt>Elevators with no backup</dt><dd>314 <small>of 478</small></dd></div>
+      <div><dt>Same ten upgrades, chosen better</dt><dd>+47% <small>benefit</small></dd></div>
+    </dl>
+
+    <section class="prose-block">
+      <p>The MTA is spending $7.1 billion to make about sixty more stations accessible, and by law the choice has to
+        weigh who lives nearby. Earlier analyses worked at the scale of community boards, about 130,000 residents
+        each, which averages away exactly the differences that matter. I worked with census tracts, about 4,000
+        residents each, all 2,327 of them.</p>
+      <p>The measure is the <b>accessibility gap</b>: how much further a tract's residents travel to the nearest
+        accessible station than to the nearest station of any kind. Subtracting the nearest station removes ordinary
+        transit coverage, so a neighbourhood with no subway at all has a transit problem, not an accessibility one,
+        and doesn't count against the system. Weighting the gap by the number of residents with a disability gives
+        <b>person-miles</b>, the burden each tract carries.</p>
+    </section>
+
+    <figure class="fig wide">
+      <div class="gapmap" id="gapmap">
+        <div class="gm-views" role="group" aria-label="Map view">
+          <button type="button" data-view="gap" aria-pressed="true">The gap</button>
+          <button type="button" data-view="lisa" aria-pressed="false">Hot spots</button>
+          <button type="button" data-view="ten" aria-pressed="false">Ten upgrades</button>
+        </div>
+        <canvas aria-label="Map of New York City census tracts coloured by the accessibility gap"></canvas>
+        <div class="gm-read" aria-live="polite"></div>
+      </div>
+      <figcaption>
+        <span class="gm-cap" data-for="gap"><b>Fig. 1</b> · Person-miles of gap per tract: residents with a disability
+          multiplied by the extra distance to an accessible station. Orange dots are accessible stations; open circles
+          are not. Hatched tracts are left out: no subway within reach, no residents, or a survey estimate too uncertain to use. Hover any tract.</span>
+        <span class="gm-cap" data-for="lisa" hidden><b>Fig. 1</b> · Local Moran's I, 999 permutations, p ≤ 0.05. Orange
+          tracts are underserved and surrounded by other underserved tracts; blue are well served among well served.</span>
+        <span class="gm-cap" data-for="ten" hidden><b>Fig. 1</b> · The ten upgrades that would remove the most person-miles,
+          chosen one at a time (numbered), and the twelve stations the MTA announced in July 2025 (squares).</span>
+        <span class="legend-cls gm-key" data-for="gap">
+          <span><i style="background:#e8edf2"></i>No gap</span>
+          <span><i style="background:#c9d8e6"></i>0–40</span>
+          <span><i style="background:#9db8d2"></i>40–87</span>
+          <span><i style="background:#6f97bd"></i>87–160</span>
+          <span><i style="background:#3f6f9c"></i>160–271</span>
+          <span><i style="background:#1f4e79"></i>271+</span>
+        </span>
+        <span class="legend-cls gm-key" data-for="lisa" hidden>
+          <span><i style="background:#c8782f"></i>Hot spot (161)</span>
+          <span><i style="background:#4f7fa8"></i>Cold spot (366)</span>
+          <span><i style="background:#e9c9a6"></i>Outlier (13)</span>
+          <span><i style="background:#ecebe2"></i>Not significant</span>
+        </span>
+        <span class="legend-cls gm-key" data-for="ten" hidden>
+          <span><i class="dot-orange"></i>Best ten, in order</span>
+          <span><i class="sq-ink"></i>MTA 2025 picks</span>
+        </span>
+      </figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <h2>The gap clusters, and that is the clearest result</h2>
+      <p>Global Moran's I on the gap is <b>+0.70</b> (p = 0.001): underserved tracts sit next to underserved tracts far
+        more than chance would allow. Local Moran's I finds <b>161 tracts</b> in significant hot spots, home to
+        <b>112,151 residents with a disability</b>, and they turn up in every borough: 46 in Brooklyn, 39 in the Bronx,
+        30 on Staten Island, 24 in Manhattan and 22 in Queens. Much of eastern Queens shows as a cold spot, but its
+        tracts sit on average twice as far from any station as the city's, a transit gap this measure deliberately
+        doesn't count against accessibility.</p>
+    </section>
+
+    <section class="prose-block">
+      <h2>Not bigger gaps, but more of them</h2>
+      <p>Does the gap fall harder where more people have a disability? Not in the way a correlation would look for.
+        The average gap is flat across tracts ranked by disability rate. What changes is how <em>often</em> a gap
+        exists at all: from about <b>56%</b> of tracts in the lowest tenth to <b>69%</b> in the highest (logistic
+        model, odds ratio 1.028 per percentage point, p = 0.001).</p>
+    </section>
+
+    <figure class="fig wide">
+      <div class="deciles" id="deciles"></div>
+      <figcaption>
+        <span><b>Fig. 2</b> · The 1,604 analysed tracts in ten equal groups, by the share of residents with a disability.
+          Left: the average gap barely moves. Right: the share of tracts with any gap climbs. Hover a group.</span>
+      </figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <h2>Almost nothing survives spatial dependence</h2>
+      <p>An ordinary regression says income, race and density all predict the gap, with very small p-values. But the
+        regression's leftover errors are themselves clustered (Moran's I = +0.67), so those p-values can't be trusted.
+        Refitting as a spatial error model (λ = +0.85) leaves <b>every one of them insignificant</b>. The honest reading
+        is that the gap has strong spatial structure that tract demographics don't explain. Reporting the ordinary
+        regression alone would have produced three confident, wrong conclusions.</p>
+    </section>
+
+    <table class="data">
+      <caption>p-values, ordinary least squares against the spatial error model</caption>
+      <thead><tr><th>Control</th><th>OLS</th><th>Spatial error</th></tr></thead>
+      <tbody>
+        <tr><td>Disability rate</td><td>0.163</td><td>0.626</td></tr>
+        <tr class="flag"><td>Median income</td><td><b>0.0002</b></td><td>0.730</td></tr>
+        <tr class="flag"><td>Percent non-white</td><td><b>0.0007</b></td><td>0.148</td></tr>
+        <tr class="flag"><td>Population density</td><td><b>0.0017</b></td><td>0.439</td></tr>
+      </tbody>
+    </table>
+
+    <section class="prose-block">
+      <h2>Which stations next</h2>
+      <p>For each of the 332 stations that could be upgraded, I recalculated every tract's gap as if that station were
+        accessible, and summed the person-miles removed. Taking the ten best scores on their own claims
+        <b>52,255</b> person-miles. Built together, those ten deliver only <b>28,916</b>, because six of them sit on
+        the Staten Island Railway and the Queens M and R lines and serve the same neighbourhoods.</p>
+      <p>Choosing one station at a time instead, and re-scoring the rest after each pick, gets <b>42,443</b> person-miles
+        from the same ten upgrades: <b>47% more for the same budget</b>, and a quarter of the citywide burden.</p>
+    </section>
+
+    <table class="bars">
+      <caption>Person-miles of gap removed by ten upgrades</caption>
+      <tbody>
+        <tr class="muted"><th>Ten best scores, as claimed</th><td><i style="--w: 100%"></i>52,255</td></tr>
+        <tr class="control"><th>The same ten, built together</th><td><i style="--w: 55%"></i>28,916</td></tr>
+        <tr><th>Ten chosen one at a time</th><td><i style="--w: 81%"></i>42,443</td></tr>
+      </tbody>
+    </table>
+
+    <table class="data ranked">
+      <caption>The ten upgrades, chosen one at a time</caption>
+      <thead><tr><th>#</th><th>Station</th><th>Borough</th><th>Person-miles</th></tr></thead>
+      <tbody>
+        <tr class="flag"><td>1</td><td>63 Dr–Rego Park</td><td>Queens</td><td>6,980</td></tr>
+        <tr><td>2</td><td>Huguenot</td><td>Staten Island</td><td>5,844</td></tr>
+        <tr><td>3</td><td>Grasmere</td><td>Staten Island</td><td>4,992</td></tr>
+        <tr><td>4</td><td>Baychester Av</td><td>Bronx</td><td>4,025</td></tr>
+        <tr><td>5</td><td>Delancey St–Essex St</td><td>Manhattan</td><td>3,889</td></tr>
+        <tr><td>6</td><td>174 St</td><td>Bronx</td><td>3,664</td></tr>
+        <tr><td>7</td><td>Saratoga Av</td><td>Brooklyn</td><td>3,472</td></tr>
+        <tr><td>8</td><td>110 St</td><td>Manhattan</td><td>3,438</td></tr>
+        <tr><td>9</td><td>137 St–City College</td><td>Manhattan</td><td>3,107</td></tr>
+        <tr><td>10</td><td>Rockaway Av</td><td>Brooklyn</td><td>3,033</td></tr>
+      </tbody>
+    </table>
+
+    <section class="prose-block">
+      <p>Of the twelve stations the MTA announced in July 2025, one, 63 Dr–Rego Park (highlighted), is also first on this
+        list. The others rank between 14th and 289th on this one measure. The MTA's selection weighs criteria beyond
+        what a distance model can see, so this is a comparison, not a verdict.</p>
+    </section>
+
+    <section class="prose-block">
+      <h2>How much each choice matters</h2>
+      <p>I re-ran the whole analysis under each alternative choice. Two barely mattered. One mattered enormously:
+        counting a station as accessible only if it has a backup elevator or a ramp. On paper a third of stations are
+        accessible, but <b>314 of the system's 478 elevators have no backup</b>, so when that one elevator is out, the
+        station isn't accessible that day.</p>
+    </section>
+
+    <table class="data">
+      <caption>The same analysis under each alternative</caption>
+      <thead><tr><th>Scenario</th><th>Tracts with no gap</th><th>Burden vs baseline</th></tr></thead>
+      <tbody>
+        <tr><td>Baseline</td><td>39.3%</td><td>—</td></tr>
+        <tr><td>Partly accessible stations counted as accessible</td><td>40.1%</td><td>−3.1%</td></tr>
+        <tr><td>Geometric instead of population-weighted centres</td><td>39.7%</td><td>−0.2%</td></tr>
+        <tr><td>Unreliable survey tracts kept in</td><td>40.6%</td><td>+17.0%</td></tr>
+        <tr class="flag"><td>Only stations with a backup elevator or ramp</td><td>7.7%</td><td>+532%</td></tr>
+      </tbody>
+    </table>
+
+    <section class="prose-block">
+      <h2>What it adds up to</h2>
+      <p>The gap is real, concentrated, and spatially structured in a way demographics don't explain. It falls on
+        residents with a disability not as bigger distances but as more neighbourhoods with any gap at all. The order
+        of upgrades matters as much as their number: chosen one at a time, the same ten stations remove 47% more of the
+        burden. And the official one-in-three figure flatters the system, because most of it hangs on a single
+        elevator.</p>
+      <p class="sheet-no">Limits</p>
+      <ul class="limits">
+        <li>Distances are straight lines, which understates the gap wherever highways, parks or water break the walking
+          network. Routing on OpenStreetMap is the most valuable next step.</li>
+        <li>Disability counts come from a survey, with errors widest where populations are smallest. Screening out
+          unreliable tracts removes 28.5% of them, so results are reported with and without the screen.</li>
+        <li>The correlation between disability rate and the gap is weak under every scenario, and its significance
+          depends on that screen. Nothing important rests on it.</li>
+      </ul>
+    </section>
+
+    <footer class="sources">
+      <p class="sheet-no">Sources</p>
+      <p>MTA Subway Stations, Elevator &amp; Escalator Inventory and Accessible Platform Availability, via NY Open Data ·
+        US Census Bureau ACS 2020–2024 5-year estimates, table S1810 · TIGER/Line 2024 tract boundaries · 2020
+        population-weighted tract centroids · MTA 2025–2029 capital plan station announcements, July 2025.
+        Map drawn on this page from the project's processed tracts, in NY State Plane.</p>
+      <p><a class="back" href="../../#atlas">← Back to the Atlas</a></p>
+    </footer>
+  </main>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="../../sheet.js?v=2"></script>
+  <script src="../project.js"></script>
+  <script src="data.js"></script>
+  <script src="gap.js?v=2"></script>
+</body>
+</html>

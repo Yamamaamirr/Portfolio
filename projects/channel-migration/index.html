@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../icons/4326-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../icons/4326-16.png" />
+  <link rel="apple-touch-icon" href="../../icons/4326-180.png" />
+  <title>Channel Migration · Yamama Amir</title>
+  <meta name="description" content="Yearly river outlines traced from satellite imagery and laid over pipelines, to show where a channel is moving. Built at Earthbound AI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../project.css" />
+  <link rel="stylesheet" href="../app.css" />
+</head>
+<body class="app-page" data-sheet-label="GEOWEB APP III">
+  <canvas id="sheet" class="sheet" aria-hidden="true"></canvas>
+  <header class="top project-top">
+    <a class="back" href="../../#atlas">← Yamama Amir</a>
+    <nav>
+      <a href="../../#story">Story</a>
+      <a href="../../#atlas">Atlas</a>
+      <a class="boxed" href="../../#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="app">
+    <section class="app-hero">
+      <div>
+        <p class="eyebrow">Industry work · <b>pipeline integrity</b> · satellite imagery</p>
+        <h1>Channel Migration</h1>
+        <p class="lede">Rivers move. This app traces each one from satellite imagery, year after year, and lays the traces over the pipelines.</p>
+        <div class="cta">
+          <a class="btn primary" href="#masks">See a bend ↓</a>
+        </div>
+        <dl class="facts">
+          <dt>Company</dt><dd>Earthbound AI, which models natural hazards for pipeline operators</dd>
+          <dt>Role</dt><dd>GIS engineer, primary developer</dd>
+          <dt>Years</dt><dd>2026</dd>
+          <dt>Stack</dt><dd>React · Tailwind · Mapbox GL · FastAPI · DuckDB · GeoParquet on S3</dd>
+        </dl>
+      </div>
+      <figure class="appshot">
+        <div class="browser">
+          <div class="browser-bar"><i></i><i></i><i></i><span>channel migration · river masks</span></div>
+          <img src="img/masks.jpg" alt="Satellite map of a meandering river with its channel outline from each year laid over it in colour, oranges for the older years through purple to light blue for the latest, and a table below listing river-mask collections with a button for each year" width="1600" height="1626" />
+        </div>
+        <p class="cap">One bend, every traced year at once. River, route and place names are blurred.</p>
+      </figure>
+    </section>
+
+    <section class="brief">
+      <div>
+        <p class="eyebrow">The brief</p>
+        <h2>See the bank coming before it reaches the pipe</h2>
+      </div>
+      <div>
+        <p>A pipe laid under a river was laid for the river as it was then. Meanders creep sideways, banks cut
+          back, and a crossing designed for one channel can end up under another. The change is slow enough to miss
+          from one year to the next, and plain on the map once the years are stacked.</p>
+        <p>The app was the newest of the three I worked on at Earthbound, and I was its primary developer, on the web
+          app and on the FastAPI service behind it.</p>
+      </div>
+    </section>
+
+    <section class="wide" id="masks">
+      <div class="wide-text">
+        <div>
+          <p class="eyebrow"><b>01</b> · River masks</p>
+          <h2>One outline a year, stacked</h2>
+        </div>
+        <div>
+          <p>Each river near the network has a collection of masks: the channel's outline traced from that year's
+            imagery. The table at the bottom lists the collections, close to two thousand of them. Pick one and the
+            map flies to it. Press play and the years run in order, or switch single years on and off to compare two.
+            Where the colours fan out, the river has moved. In the bend above, the older outlines sit well round
+            from where the channel runs now.</p>
+          <ul class="ticks">
+            <li><b>Colours by age,</b> grouped two years at a time so the stack stays readable</li>
+            <li><b>Masks in view</b> narrows the table to what the map is showing</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="appshot">
+        <div class="browser">
+          <div class="browser-bar"><i></i><i></i><i></i><span>river masks · one bend</span></div>
+          <img src="img/bend.jpg" alt="Close view of a meander bend with yearly channel outlines: orange and red outlines from earlier years swing wide around the bend, while the light blue recent outlines cut a tighter path" width="2000" height="1291" loading="lazy" />
+        </div>
+        <p class="cap">The bend up close. The orange and red outlines of the earlier years sit apart from the light blue of the latest ones: that gap is the river moving.</p>
+      </figure>
+    </section>
+
+    <section class="handover">
+      <div>
+        <p class="eyebrow">Where river meets pipe</p>
+        <h2>Crossing, parallel or encroachment</h2>
+        <p>Every place a river and a pipe meet is a site, sorted into three types: the river crosses the pipe, runs
+          beside it, or is closing in on it. Each one carries its distance and the angle at which the river meets the
+          pipe. Filter by business unit or route and the side panel counts the sites of each type in view, so an
+          engineer can work down a list instead of scanning the map.</p>
+      </div>
+      <ul class="services">
+        <li>River-mask timeline<small>web app</small></li>
+        <li>Collections table<small>web app</small></li>
+        <li>Site types and filters<small>web app and API</small></li>
+        <li>Masks, flowlines and sites<small>FastAPI and DuckDB</small></li>
+      </ul>
+    </section>
+
+    <footer class="app-foot">
+      <p class="eyebrow">Credits</p>
+      <p>Built at Earthbound AI · React, TypeScript, Tailwind, Mapbox GL JS · FastAPI, DuckDB, GeoParquet on S3 ·
+        river flowlines from the USGS National Hydrography Dataset. The screenshot is from the live app, with names
+        blurred and road labels removed.</p>
+      <p><a class="back" href="../../#atlas">← Back to the Atlas</a></p>
+    </footer>
+  </main>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="../../sheet.js?v=2"></script>
+  <script src="../project.js"></script>
+</body>
+</html>

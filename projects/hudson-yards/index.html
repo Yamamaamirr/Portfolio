@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../icons/4326-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../icons/4326-16.png" />
+  <link rel="apple-touch-icon" href="../../icons/4326-180.png" />
+  <title>Hudson Yards LiDAR · Yamama Amir</title>
+  <meta name="description" content="Measuring the rise of Hudson Yards with two LiDAR flights, 2014 and 2017." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../project.css" />
+</head>
+<body class="project">
+  <canvas id="sheet" class="sheet" aria-hidden="true"></canvas>
+
+  <header class="top project-top">
+    <a class="back" href="../../#atlas">← Yamama Amir</a>
+    <nav>
+      <a href="../../#story">Story</a>
+      <a href="../../#atlas">Atlas</a>
+      <a class="boxed" href="../../#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="case">
+    <p class="sheet-no">Plate I · LiDAR change detection · 2014–2017</p>
+    <h1>Measuring the Rise of Hudson Yards</h1>
+    <p class="lede">Two LiDAR flights, three years apart, and six million cubic metres of new city.</p>
+
+    <p class="meta">Monitoring Cities · NYU · Prof. Masoud Ghandehari<span class="sep"> &nbsp;|&nbsp; </span><span class="tools">PDAL · QGIS · Python</span></p>
+
+    <dl class="stats-row">
+      <div><dt>Net volume added</dt><dd>6,317,000 m³</dd></div>
+      <div><dt>Largest tower rise</dt><dd>217.0 m <small>(30 HY)</small></dd></div>
+      <div><dt>Level of detection</dt><dd>±0.71 m</dd></div>
+      <div><dt>Match to published heights</dt><dd>≤ 3% <small>(4 of 5)</small></dd></div>
+    </dl>
+
+    <section class="prose-block">
+      <p>Between the spring of 2014 and the spring of 2017, the eastern rail yard on Manhattan's far west side
+        disappeared under a platform and a cluster of towers. I wanted to know how much city that was, in metres
+        and cubic metres, and whether it could be measured from the air.</p>
+      <p>NOAA flew LiDAR over the area in both years. I built a 1 m surface model from each flight, subtracted
+        one from the other, and checked the result against streets that didn't change and against published
+        building heights.</p>
+    </section>
+
+    <figure class="fig wide">
+      <div class="swipe" id="swipe" style="--pos: 50%">
+        <img src="img/dsm_2017.jpg" alt="Surface model of Hudson Yards in May 2017, with the new towers" width="1600" height="1359" />
+        <div class="swipe-top"><img src="img/dsm_2014.jpg" alt="Surface model of Hudson Yards in March–April 2014, before the towers" width="1600" height="1359" /></div>
+        <div class="swipe-line" aria-hidden="true"><span>⟷</span></div>
+        <span class="swipe-tag left">← Mar–Apr 2014</span>
+        <span class="swipe-tag right later">May 2017 →</span>
+        <input type="range" min="0" max="100" value="50" step="0.1" aria-label="Drag to compare 2014 and 2017" />
+      </div>
+      <figcaption>
+        <span><b>Fig. 1</b> · Drag the arrow right towards 2017, left towards 2014. Surface height above sea level, cranes removed;
+          darker blue is taller.</span>
+        <span class="legend-ramp">0 <i></i> 270 m</span>
+      </figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <h2>From point cloud to surface</h2>
+      <p>The 2014 flight gave 8.4 million points over the study area; the 2017 flight, almost four times denser,
+        gave 31.2 million. Both came in the same coordinate system (NAD83(2011) UTM 18N, heights in metres above
+        NAVD88), so nothing needed reprojecting.</p>
+      <p>I removed points flagged as noise and stray points below roofs, while keeping the genuinely low points in
+        the rail-yard pits. Each 1 m cell takes the highest point inside it, on exactly the same grid in both years.
+        Before measuring change, a shape filter replaced most construction cranes with the surface around them.</p>
+    </section>
+
+    <figure class="fig wide">
+      <div class="orbit" id="orbit" tabindex="0" aria-label="3D point cloud of Hudson Yards. Drag or use the arrow keys to rotate.">
+        <img class="orbit-img" src="img/orbit/2017_00.jpg" alt="3D LiDAR point cloud of Hudson Yards, coloured by height" width="1000" height="566" />
+        <div class="orbit-years" role="group" aria-label="Flight">
+          <button type="button" data-year="2014">2014</button>
+          <button type="button" data-year="2017" aria-pressed="true">2017</button>
+        </div>
+        <span class="orbit-hint" aria-hidden="true">⟲ Drag to rotate</span>
+        <span class="orbit-heading" aria-hidden="true">Heading 135°</span>
+      </div>
+      <figcaption>
+        <span><b>Fig. 2</b> · The cleaned point clouds in 3D, rendered in QGIS: 8.4 million points in 2014,
+          31.2 million in 2017, coloured by height. Drag to orbit Hudson Yards, and switch flights at the same angle.</span>
+        <span class="legend-ramp">0 <i class="pc"></i> 280 m</span>
+      </figcaption>
+    </figure>
+
+    <figure class="fig wide">
+      <div class="annotated">
+        <img src="img/change.jpg" alt="Map of height change between 2014 and 2017: new towers in blue, losses in orange" width="1600" height="1359" loading="lazy" />
+        <span class="pin" style="--x: 52.9%; --y: 44.7%"><span class="lbl"><b>30 Hudson Yards</b> +217.0 m</span></span>
+        <span class="pin" style="--x: 46.2%; --y: 59%"><span class="lbl"><b>10 Hudson Yards</b> +214.5 m</span></span>
+        <span class="pin left" style="--x: 44.3%; --y: 31.4%"><span class="lbl"><b>55 Hudson Yards</b> +154.0 m</span></span>
+        <span class="pin left" style="--x: 41.1%; --y: 37.6%"><span class="lbl"><b>35 Hudson Yards</b> +86.0 m</span></span>
+        <span class="pin left" style="--x: 33.8%; --y: 50.8%"><span class="lbl"><b>15 Hudson Yards</b> +109.5 m</span></span>
+        <span class="pin left down" style="--x: 38.3%; --y: 52.6%"><span class="lbl"><b>The Shed</b> +50.5 m</span></span>
+        <span class="pin" style="--x: 65.7%; --y: 63.3%"><span class="lbl"><b>The Eugene</b> +200.0 m</span></span>
+        <span class="pin" style="--x: 73.5%; --y: 58.2%"><span class="lbl"><b>One Manhattan West</b> +71.5 m</span></span>
+        <span class="pin left muted" style="--x: 26.5%; --y: 34.8%"><span class="lbl"><b>Western rail yard</b> control, 0.0 m</span></span>
+      </div>
+      <figcaption>
+        <span><b>Fig. 3</b> · Height change, 2017 − 2014. Changes within ±0.71 m are treated as noise and left blank;
+          small changes are faded.<span class="wide-only"> Labels give each tower's main-roof rise.</span></span>
+        <span class="legend-div"><i class="loss"></i>lost<i class="gain"></i>gained</span>
+      </figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <h2>What changed</h2>
+      <p>The study area gained <b>6,615,000 m³</b> and lost <b>298,000 m³</b>, a net gain of <b>6,317,000 m³</b>.
+        Eighty-eight percent of the gained volume sits on or within 30 m of the named sites, and the eastern
+        rail-yard block alone accounts for just over half of everything added.</p>
+    </section>
+
+    <figure class="fig">
+      <table class="pairs">
+        <caption>Main roof height above street level, cranes excluded (m)</caption>
+        <tbody>
+          <tr><th>10 Hudson Yards</th><td><i class="y14" style="--w: 17.5%"></i><i class="y17" style="--w: 100%"></i><span>45.5 → 260.0</span></td></tr>
+          <tr><th>30 Hudson Yards*</th><td><i class="y14" style="--w: 1%"></i><i class="y17" style="--w: 84.4%"></i><span>2.5 → 219.5</span></td></tr>
+          <tr><th>The Eugene</th><td><i class="y14" style="--w: 5.3%"></i><i class="y17" style="--w: 82.3%"></i><span>13.9 → 213.9</span></td></tr>
+          <tr><th>55 Hudson Yards*</th><td><i class="y14" style="--w: 9.3%"></i><i class="y17" style="--w: 68.5%"></i><span>24.2 → 178.2</span></td></tr>
+          <tr><th>15 Hudson Yards*</th><td><i class="y14" style="--w: 1.9%"></i><i class="y17" style="--w: 44%"></i><span>4.9 → 114.4</span></td></tr>
+          <tr><th>35 Hudson Yards*</th><td><i class="y14" style="--w: 0%"></i><i class="y17" style="--w: 32%"></i><span>0 → 83.3</span></td></tr>
+          <tr><th>One Manhattan West*</th><td><i class="y14" style="--w: 0.3%"></i><i class="y17" style="--w: 27.8%"></i><span>0.7 → 72.2</span></td></tr>
+          <tr><th>The Shed*</th><td><i class="y14" style="--w: 1%"></i><i class="y17" style="--w: 20.5%"></i><span>2.7 → 53.2</span></td></tr>
+        </tbody>
+      </table>
+      <figcaption>
+        <span><b>Fig. 4</b> · Each tower in 2014 (grey) and 2017 (blue). * under construction at the 2017 flight.
+          35 Hudson Yards sat slightly below the street in 2014 (−2.7 m), shown as 0.</span>
+        <span class="legend-div"><i class="y14k"></i>2014<i class="y17k"></i>2017</span>
+      </figcaption>
+    </figure>
+
+    <figure class="fig">
+      <table class="bars">
+        <caption>Net volume change by site, 2014 → 2017 (m³)</caption>
+        <tbody>
+          <tr><th>30 Hudson Yards*</th><td><i style="--w: 100%"></i>1,100,000</td></tr>
+          <tr><th>Shops &amp; Restaurants podium*</th><td><i style="--w: 72%"></i>792,000</td></tr>
+          <tr><th>10 Hudson Yards</th><td><i style="--w: 53.6%"></i>590,000</td></tr>
+          <tr><th>55 Hudson Yards*</th><td><i style="--w: 43.3%"></i>476,000</td></tr>
+          <tr><th>The Eugene</th><td><i style="--w: 22.9%"></i>252,000</td></tr>
+          <tr><th>Open areas of the platform</th><td><i style="--w: 20.9%"></i>230,000</td></tr>
+          <tr><th>35 Hudson Yards*</th><td><i style="--w: 18.6%"></i>205,000</td></tr>
+          <tr><th>The Shed*</th><td><i style="--w: 14.7%"></i>162,000</td></tr>
+          <tr><th>One Manhattan West*</th><td><i style="--w: 13.5%"></i>149,000</td></tr>
+          <tr><th>15 Hudson Yards*</th><td><i style="--w: 12.7%"></i>140,000</td></tr>
+          <tr><th>Public Square &amp; Gardens</th><td><i style="--w: 9.9%"></i>109,000</td></tr>
+          <tr class="control"><th>Western rail yard (control)</th><td><i style="--w: 0.5%"></i>5,010</td></tr>
+        </tbody>
+      </table>
+      <figcaption><span>* under construction at the time of the 2017 flight, so measured as it stood, not at final height.
+        The western rail yard was not built on, and stayed flat: a useful check on the method.</span></figcaption>
+    </figure>
+
+    <section class="prose-block">
+      <h2>How far to trust it</h2>
+      <p>On streets that didn't change, the two surfaces differ by +0.03 m on average (standard deviation 0.11 m).
+        Across all stable streets and older roofs the standard deviation is 0.36 m, so I treated any change smaller
+        than <b>0.71 m</b> as noise. Shifting one surface by up to 2 m in any direction didn't improve the match,
+        so the flights line up horizontally. The river even reads −0.70 m in 2014, against −0.67 m at the Battery
+        tide gauge during the flight.</p>
+    </section>
+
+    <figure class="fig">
+      <table class="data">
+        <caption>LiDAR heights against published (CTBUH) architectural heights</caption>
+        <thead><tr><th>Building</th><th>Published</th><th>LiDAR, 2017</th><th>Difference</th></tr></thead>
+        <tbody>
+          <tr><td>10 Hudson Yards</td><td>267.7 m</td><td>268.9 m</td><td>+0.4%</td></tr>
+          <tr><td>The Eugene</td><td>222.5 m</td><td>217.2 m</td><td>−2.4%</td></tr>
+          <tr><td>The Ohm</td><td>121.2 m</td><td>123.9 m</td><td>+2.2%</td></tr>
+          <tr><td>Abington House</td><td>111.2 m</td><td>114.4 m</td><td>+2.9%</td></tr>
+          <tr class="flag"><td>Five Manhattan West</td><td>79.9 m</td><td>88.1 m</td><td>+10.3%<sup class="fn" data-note="Its highest point reads 8.2 m too tall, but its main roof, at 82.0 m, is within 2.6% of the published height.">1</sup></td></tr>
+        </tbody>
+      </table>
+    </figure>
+
+    <footer class="sources">
+      <p class="sheet-no">Sources</p>
+      <p>NOAA LiDAR: 2014 flight (dataset 4920, USGS Post-Sandy) and 2017 flight (dataset 9306, NYC Topobathy) ·
+        CTBUH building heights · NYC Building Footprints and OpenStreetMap for site outlines · NOAA tide gauge
+        8518750, The Battery · Case study: Rinaldi, Motoa &amp; Ghandehari (2025), <em>Remote Sensing</em> 17, 3428.
+        Maps rendered in QGIS for this page.</p>
+      <p><a class="back" href="../../#atlas">← Back to the Atlas</a></p>
+    </footer>
+  </main>
+
+  <div class="tooltip" id="tooltip" role="tooltip"></div>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="../../sheet.js?v=2"></script>
+  <script src="../project.js"></script>
+</body>
+</html>

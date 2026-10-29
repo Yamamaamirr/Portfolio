@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../icons/4326-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../icons/4326-16.png" />
+  <link rel="apple-touch-icon" href="../../icons/4326-180.png" />
+  <title>Recovery Resource Map · Yamama Amir</title>
+  <meta name="description" content="A live map of recovery, treatment and prevention resources in Wilkes County, North Carolina, with an admin portal and privacy-first analytics, built for the nonprofit Recovery Revolution." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="../project.css" />
+  <link rel="stylesheet" href="../app.css" />
+</head>
+<body class="app-page" data-sheet-label="GEOWEB APP V">
+  <canvas id="sheet" class="sheet" aria-hidden="true"></canvas>
+  <header class="top project-top">
+    <a class="back" href="../../#atlas">← Yamama Amir</a>
+    <nav>
+      <a href="../../#story">Story</a>
+      <a href="../../#atlas">Atlas</a>
+      <a class="boxed" href="../../#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="app">
+    <section class="app-hero">
+      <div>
+        <p class="eyebrow">Client work · <b>nonprofit</b> · Wilkes County, North Carolina</p>
+        <h1>Recovery Resource Map</h1>
+        <p class="lede">One place to find recovery help in a rural county, and the tools for a small nonprofit team to keep it true.</p>
+        <div class="cta">
+          <a class="btn primary" href="https://green-stick-sage.vercel.app/" target="_blank" rel="noopener">Open the live map ↗</a>
+          <a class="btn" href="#how">How it works ↓</a>
+        </div>
+        <dl class="facts">
+          <dt>Client</dt><dd>Recovery Revolution, a recovery and prevention nonprofit</dd>
+          <dt>Role</dt><dd>Sole designer and developer, through IMPACT Advantage Consulting</dd>
+          <dt>Year</dt><dd>2026</dd>
+          <dt>Stack</dt><dd>React · Mapbox GL · Express · PostgreSQL + PostGIS</dd>
+        </dl>
+      </div>
+      <div class="browser">
+        <div class="browser-bar"><i></i><i></i><i></i><span>green-stick-sage.vercel.app</span></div>
+        <img src="img/map.jpg" alt="The public resource map: a searchable list of resources on the left and gold pins on a dark map of North Wilkesboro on the right" width="1600" height="760" />
+      </div>
+    </section>
+
+
+    <section class="brief">
+      <div>
+        <p class="eyebrow">The brief</p>
+        <h2>One map for a whole county's help</h2>
+      </div>
+      <div>
+        <p>Recovery Revolution is a nonprofit working on addiction recovery and prevention in Wilkes County, in the
+          foothills of north-west North Carolina. They wanted one place where anyone, whether a person in recovery,
+          a family member or a case manager, could find nearby help: treatment, prevention programmes, employers
+          who hire people in recovery, and businesses trained to give naloxone in an overdose.</p>
+        <p>A small team can't afford a tool that needs a developer to keep it running. So the brief was really two
+          products: a public map that asks nothing of the people using it, and an admin side that busy staff can run
+          on their own. I designed and built both, end to end, and it now runs embedded on the nonprofit's website.</p>
+      </div>
+    </section>
+
+    <section class="feature">
+      <div class="feature-media duo">
+        <div class="screen"><img src="img/popup.jpg" alt="A resource card on the map showing name, resource-type badges, address, phone number and a Report Outdated Info link" width="920" height="637" loading="lazy" /></div>
+        <div class="screen"><img src="img/report.jpg" alt="The Report Outdated Information form with a choice of outdated, incorrect or other, and a text box" width="723" height="612" loading="lazy" /></div>
+      </div>
+      <div class="feature-text">
+        <p class="eyebrow"><b>01</b> · For the community</p>
+        <h2>Find help in seconds</h2>
+        <p>No account, no location permission, nothing to install. Type part of a name and the list and map narrow
+          together; tap a kind of help to filter. Every pin opens a card with a phone number to tap, a website and the
+          address, on a dark, street or satellite basemap.</p>
+        <ul class="ticks">
+          <li><b>Report outdated info</b> on every card, so the community helps keep listings right</li>
+          <li>Each report <b>emails staff</b> straight away, rate-limited against spam</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="feature flip">
+      <div class="feature-media phones">
+        <div class="phone"><img src="img/mobile_1.jpg" alt="The map on a phone, with a resource card sliding up from the bottom" width="452" height="787" loading="lazy" /></div>
+        <div class="phone"><img src="img/mobile_2.jpg" alt="Another resource card on a phone, showing address, phone and website" width="455" height="782" loading="lazy" /></div>
+      </div>
+      <div class="feature-text">
+        <p class="eyebrow"><b>02</b> · On a phone</p>
+        <h2>Built for the moment someone needs it</h2>
+        <p>People often look for help from a phone, sometimes in a hurry. On small screens the card slides up from the
+          bottom instead of covering the pin, and the phone number is one tap away.</p>
+      </div>
+    </section>
+
+    <section class="feature">
+      <div class="feature-media">
+        <div class="screen"><img src="img/clusters.jpg" alt="The resource map zoomed out over North Wilkesboro and Wilkesboro: numbered clusters of listings along the main streets, with only a few single pins farther out" width="1436" height="907" loading="lazy" /></div>
+        <p class="cap">Zoomed out, nearby listings merge into numbered clusters.</p>
+      </div>
+      <div class="feature-text">
+        <p class="eyebrow"><b>03</b> · What the map revealed</p>
+        <h2>Help sits in one small part of the county</h2>
+        <p>Of the 39 listings live today, 37 are within 5 km of central North Wilkesboro, and 26 within 2 km. The rest
+          of a large, mostly rural county has almost none. Some of that is real, because services gather where people
+          and roads do; some is just what has been listed so far. The nonprofit's reports are built to tell the two
+          apart.</p>
+      </div>
+    </section>
+
+    <section class="feature flip">
+      <div class="feature-media">
+        <div class="browser">
+          <div class="browser-bar"><i></i><i></i><i></i><span>…/admin/locations/new</span></div>
+          <img src="img/admin_add.jpg" alt="The admin Add Location form beside a map preview showing the new pin and its resource types" width="1600" height="906" loading="lazy" />
+        </div>
+        <p class="cap">Adding a listing, shown with test values.</p>
+      </div>
+      <div class="feature-text">
+        <p class="eyebrow"><b>04</b> · For nonprofit staff</p>
+        <h2>Keeping it true without a developer</h2>
+        <p>Staff add a place by typing its name: Google Places fills in the address, coordinates, phone and website,
+          and a live preview shows the pin before it's saved.</p>
+        <ul class="ticks">
+          <li><b>Hide or mark closed</b> instead of deleting; hidden listings don't exist to the public API</li>
+          <li><b>Flags</b> from the public arrive in a review queue with an unread badge</li>
+          <li><b>Staff logins</b> are checked by the server on every change</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="feature">
+      <div class="feature-text">
+        <p class="eyebrow"><b>05</b> · Measuring reach, privately</p>
+        <h2>Evidence of reach, without tracking anyone</h2>
+        <p>A nonprofit needs to show its work reaches people, but off-the-shelf analytics would have meant cookies,
+          a consent banner and visitor data sent to a third party, on a site about addiction. So I built a small
+          first-party system: every search, filter, pin opened or phone number tapped becomes one anonymous row.</p>
+      </div>
+      <div class="feature-text">
+        <ul class="ticks">
+          <li><b>No cookies.</b> A visitor is a random id that lives for one browser tab.</li>
+          <li><b>No IP addresses.</b> The server turns each into a city and throws it away.</li>
+          <li><b>Six reports:</b> resource types viewed, searches (including ones that found nothing), most-opened
+            listings, traffic, where visitors are, and a coverage-gap heatmap of where people keep looking.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="how-panel" id="how">
+      <div class="how-head">
+        <div>
+          <p class="eyebrow">How it works</p>
+          <h2>Four jobs, one system</h2>
+          <p>Every part of the stack serves one of four things the nonprofit needs. Follow a colour from the people on the
+            left to the data on the right.</p>
+        </div>
+        <ul class="flow-key">
+          <li><i class="k1">1</i>Find help</li>
+          <li><i class="k2">2</i>Flag a wrong listing</li>
+          <li><i class="k3">3</i>Measure reach</li>
+          <li><i class="k4">4</i>Keep it current</li>
+        </ul>
+      </div>
+      <svg class="arch-svg" viewBox="0 0 1220 660" role="img" aria-labelledby="arch-t">
+<title id="arch-t">How the Recovery Resource Map works: four colour-coded flows from the community and nonprofit staff, through the public map, admin portal and API, to the database and services</title>
+<defs>
+<marker id="a1f4e79" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f4e79"/></marker>
+<marker id="ac8782f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c8782f"/></marker>
+<marker id="a4f7fa8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4f7fa8"/></marker>
+<marker id="a141414" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#141414"/></marker>
+</defs>
+<text x="20" y="22" class="d-tier">People</text>
+<line x1="20" x2="200" y1="32" y2="32" class="d-tier-rule"/>
+<text x="330" y="22" class="d-tier">Website · Vercel</text>
+<line x1="330" x2="540" y1="32" y2="32" class="d-tier-rule"/>
+<text x="670" y="22" class="d-tier">Server · Railway</text>
+<line x1="670" x2="870" y1="32" y2="32" class="d-tier-rule"/>
+<text x="1000" y="22" class="d-tier">Data &amp; services</text>
+<line x1="1000" x2="1196" y1="32" y2="32" class="d-tier-rule"/>
+<rect x="20" y="70" width="180" height="140" rx="10" class="d-box d-people"/>
+<text x="34" y="95" class="d-title">The community</text>
+<text x="34" y="116" class="d-sub">people in recovery,</text>
+<text x="34" y="132" class="d-sub">families and</text>
+<text x="34" y="148" class="d-sub">case managers</text>
+<rect x="20" y="430" width="180" height="110" rx="10" class="d-box d-people"/>
+<text x="34" y="455" class="d-title">Nonprofit staff</text>
+<text x="34" y="476" class="d-sub">Recovery Revolution's</text>
+<text x="34" y="492" class="d-sub">small team</text>
+<rect x="330" y="70" width="210" height="140" rx="10" class="d-box"/>
+<text x="344" y="95" class="d-title">Public map</text>
+<text x="344" y="116" class="d-sub">React · Mapbox GL</text>
+<text x="344" y="132" class="d-sub">embedded on the</text>
+<text x="344" y="148" class="d-sub">nonprofit's website</text>
+<text x="344" y="164" class="d-sub">no login needed</text>
+<rect x="330" y="430" width="210" height="140" rx="10" class="d-box"/>
+<text x="344" y="455" class="d-title">Admin portal</text>
+<text x="344" y="476" class="d-sub">add, edit, hide listings</text>
+<text x="344" y="492" class="d-sub">review flags</text>
+<text x="344" y="508" class="d-sub">read the six reports</text>
+<rect x="670" y="70" width="200" height="300" rx="10" class="d-box"/>
+<text x="684" y="95" class="d-title">API</text>
+<text x="684" y="116" class="d-sub">Express · Prisma</text>
+<text x="684" y="150" class="d-sub">Public: read listings,</text>
+<text x="684" y="166" class="d-sub">send a flag, log events.</text>
+<text x="684" y="182" class="d-sub"></text>
+<text x="684" y="198" class="d-sub">Staff: everything else,</text>
+<text x="684" y="214" class="d-sub">login checked each time.</text>
+<text x="684" y="230" class="d-sub"></text>
+<text x="684" y="246" class="d-sub">Rate limits on all routes;</text>
+<text x="684" y="262" class="d-sub">flags capped at 5 per</text>
+<text x="684" y="278" class="d-sub">15 min per visitor.</text>
+<text x="684" y="294" class="d-sub"></text>
+<text x="684" y="310" class="d-sub">IP → city, then dropped.</text>
+<rect x="1000" y="70" width="196" height="120" rx="10" class="d-box"/>
+<text x="1014" y="95" class="d-title">PostgreSQL + PostGIS</text>
+<text x="1014" y="116" class="d-sub">Supabase</text>
+<text x="1014" y="132" class="d-sub">listings · flags</text>
+<text x="1014" y="148" class="d-sub">anonymous events</text>
+<rect x="1000" y="232" width="196" height="60" rx="10" class="d-box"/>
+<text x="1014" y="257" class="d-title">Resend</text>
+<text x="1014" y="278" class="d-sub">emails staff</text>
+<rect x="1000" y="430" width="196" height="70" rx="10" class="d-box"/>
+<text x="1014" y="455" class="d-title">Supabase Auth</text>
+<text x="1014" y="476" class="d-sub">staff logins</text>
+<rect x="1000" y="530" width="196" height="64" rx="10" class="d-box"/>
+<text x="1014" y="555" class="d-title">Google Places</text>
+<text x="1014" y="576" class="d-sub">fills in new listings</text>
+<path d="M200,100 L328,100" class="d-flow" stroke="#1f4e79" marker-end="url(#a1f4e79)"/>
+<circle cx="216" cy="100" r="9" fill="#1f4e79"/><text x="216" y="104" class="d-num">1</text>
+<text x="275.0" y="90" class="d-label" style="text-anchor:middle" fill="#1f4e79">search · tap</text>
+<path d="M540,100 L668,100" class="d-flow" stroke="#1f4e79" marker-end="url(#a1f4e79)"/>
+<text x="605.0" y="90" class="d-label" style="text-anchor:middle" fill="#1f4e79">active only</text>
+<path d="M870,100 L998,100" class="d-flow" stroke="#1f4e79" marker-end="url(#a1f4e79)"/>
+<text x="935.0" y="90" class="d-label" style="text-anchor:middle" fill="#1f4e79">listings</text>
+<path d="M200,150 L328,150" class="d-flow" stroke="#c8782f" marker-end="url(#ac8782f)"/>
+<circle cx="216" cy="150" r="9" fill="#c8782f"/><text x="216" y="154" class="d-num">2</text>
+<text x="279.0" y="140" class="d-label" style="text-anchor:middle" fill="#c8782f">report</text>
+<path d="M540,150 L668,150" class="d-flow" stroke="#c8782f" marker-end="url(#ac8782f)"/>
+<text x="605.0" y="140" class="d-label" style="text-anchor:middle" fill="#c8782f">flag</text>
+<path d="M870,140 L998,140" class="d-flow" stroke="#c8782f" marker-end="url(#ac8782f)"/>
+<text x="935.0" y="130" class="d-label" style="text-anchor:middle" fill="#c8782f">saved</text>
+<path d="M870,262 L998,262" class="d-flow" stroke="#c8782f" marker-end="url(#ac8782f)"/>
+<text x="935.0" y="252" class="d-label" style="text-anchor:middle" fill="#c8782f">notify</text>
+<path d="M1196,262 L1210,262 L1210,628 L110,628 L110,542" class="d-flow" stroke="#c8782f" marker-end="url(#ac8782f)"/>
+<text x="650" y="620" class="d-label" style="text-anchor:middle" fill="#c8782f">an email for every flag, so staff can fix the listing quickly</text>
+<path d="M540,192 L668,192" class="d-flow" stroke="#4f7fa8" stroke-dasharray="5 4" marker-end="url(#a4f7fa8)"/>
+<circle cx="556" cy="192" r="9" fill="#4f7fa8"/><text x="556" y="196" class="d-num">3</text>
+<text x="615.0" y="180" class="d-label" style="text-anchor:middle" fill="#4f7fa8">anonymous events</text>
+<path d="M870,172 L998,172" class="d-flow" stroke="#4f7fa8" stroke-dasharray="5 4" marker-end="url(#a4f7fa8)"/>
+<text x="935.0" y="162" class="d-label" style="text-anchor:middle" fill="#4f7fa8">one row each</text>
+<path d="M670,320 L600,320 L600,455 L542,455" class="d-flow" stroke="#4f7fa8" stroke-dasharray="5 4" marker-end="url(#a4f7fa8)"/>
+<text x="592" y="398" class="d-label" style="text-anchor:end" fill="#4f7fa8">six reports</text>
+<path d="M200,480 L328,480" class="d-flow" stroke="#141414" marker-end="url(#a141414)"/>
+<circle cx="216" cy="480" r="9" fill="#141414"/><text x="216" y="484" class="d-num">4</text>
+<text x="277.0" y="470" class="d-label" style="text-anchor:middle" fill="#141414">sign in</text>
+<path d="M540,500 L630,500 L630,350 L668,350" class="d-flow" stroke="#141414" marker-end="url(#a141414)"/>
+<text x="638" y="430" class="d-label" style="text-anchor:start" fill="#141414">edits</text>
+<path d="M870,340 L935,340 L935,465 L998,465" class="d-flow" stroke="#141414" marker-end="url(#a141414)"/>
+<text x="943" y="410" class="d-label" style="text-anchor:start" fill="#141414">verify login</text>
+<path d="M540,555 L998,555" class="d-flow" stroke="#141414" marker-end="url(#a141414)"/>
+<text x="770" y="545" class="d-label" style="text-anchor:middle" fill="#141414">autofill address, phone, website</text>
+</svg>
+      <ol class="flows-mobile">
+        <li><h3><i class="flow-key-dot k1">1</i>Find help</h3>
+          <div class="steps"><span>Community</span><em>→</em><span>Public map</span><em>→</em><span>API</span><em>→</em><span>PostgreSQL + PostGIS</span></div>
+          <p>Search, filter and tap; the API returns active listings only.</p></li>
+        <li><h3><i class="flow-key-dot k2">2</i>Flag a wrong listing</h3>
+          <div class="steps"><span>Community</span><em>→</em><span>Public map</span><em>→</em><span>API</span><em>→</em><span>Resend</span><em>→</em><span>Staff inbox</span></div>
+          <p>Five reports per 15 minutes per IP; every flag emails staff.</p></li>
+        <li><h3><i class="flow-key-dot k3">3</i>Measure reach</h3>
+          <div class="steps"><span>Public map</span><em>→</em><span>API</span><em>→</em><span>Events table</span><em>→</em><span>Six reports</span></div>
+          <p>Anonymous events; the IP becomes a city and is discarded.</p></li>
+        <li><h3><i class="flow-key-dot k4">4</i>Keep it current</h3>
+          <div class="steps"><span>Staff</span><em>→</em><span>Admin portal</span><em>→</em><span>API</span><em>→</em><span>Supabase Auth</span></div>
+          <p>Google Places fills new listings; the API checks every staff request.</p></li>
+      </ol>
+    </section>
+
+    <section class="handover">
+      <div>
+        <p class="eyebrow">Built to be handed over</p>
+        <h2>The nonprofit owns all of it</h2>
+        <p>A small organisation shouldn't depend on whoever happened to build its tools. Alongside a user guide for
+          staff, I wrote a transition plan that moves every service into accounts Recovery Revolution owns, through one
+          shared role mailbox, then rotates every key so the original developer, me, no longer holds access.</p>
+      </div>
+      <ul class="services">
+        <li>GitHub<small>both code repositories</small></li>
+        <li>Supabase<small>database and staff logins</small></li>
+        <li>Railway<small>API hosting</small></li>
+        <li>Vercel<small>website hosting</small></li>
+        <li>Mapbox<small>the map itself</small></li>
+        <li>Resend<small>flag emails</small></li>
+      </ul>
+    </section>
+
+    <footer class="app-foot">
+      <p class="eyebrow">Credits</p>
+      <p>Built for Recovery Revolution, Wilkes County, North Carolina, as sole designer and developer, delivered through
+        IMPACT Advantage Consulting · React 19, TypeScript, Vite, Tailwind, Mapbox GL JS · Node, Express, Prisma ·
+        Supabase (PostgreSQL, PostGIS, Auth) · Google Places · Resend · geoip-lite · Vercel and Railway. Screenshots are
+        from the user guide I wrote for the client.</p>
+      <p><a class="back" href="../../#atlas">← Back to the Atlas</a></p>
+    </footer>
+  </main>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="../../sheet.js?v=2"></script>
+  <script src="../project.js"></script>
+</body>
+</html>

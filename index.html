@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/4326-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/4326-16.png" />
+  <link rel="apple-touch-icon" href="icons/4326-180.png" />
+  <title>Yamama Amir</title>
+  <meta name="description" content="Urban GeoAI: spatial AI for equity, mobility, and civic tools." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=21" />
+</head>
+<body>
+  <canvas id="sheet" class="sheet" aria-hidden="true"></canvas>
+
+  <header class="top">
+    <div class="title-block">
+      <figure class="inset">
+        <div class="inset-frame">
+          <div class="crop"><img src="me.jpg" alt="Portrait of Yamama Amir" width="570" height="688" /></div>
+        </div>
+      </figure>
+      <div class="title-text">
+        <a class="wordmark" href="#">Yamama Amir</a>
+        <p class="byline">GeoAI &middot; urban equity &middot; mobility &middot; civic tools</p>
+      </div>
+    </div>
+    <nav>
+      <a href="#story">Story</a>
+      <a href="#atlas">Atlas</a>
+      <a href="#colophon">Colophon</a>
+      <a class="boxed" href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <main class="prose">
+      <!-- ───────── Intro ───────── -->
+      <section class="intro">
+        <p>Growing up, geography was never my forte. I had no sense of space (no pun intended), couldn't read a map to save my life, and somehow
+          ended up spending plenty of time studying geographic science. Somewhere along the way, it clicked, and it's been my
+          favourite rabbit hole ever since.</p>
+        <p>Now I work in GeoAI for cities, mostly across mobility, civic tools, and urban equity. Here you'll find things I've
+          built for companies I've worked with, alongside a pile of analyses I did out of curiosity or
+          the night before an assignment was due.<sup class="fn" data-note="The panel on the right fills in as you scroll. It works like a GitHub contribution graph: one column per month since 2021, one lane each for study, research and work, so you can see where they overlapped. The squares are illustrative: they follow the rhythm of my months at Adgile and Earthbound AI, but the counts are rounded and approximate, not exact git statistics.">1</sup></p>
+        <div class="pills">
+          <a href="#story">What do I do?</a>
+          <a href="#atlas">What have I built?</a>
+          <a href="#ch-next">Where am I going?</a>
+          <a href="#contact">Say hello</a>
+        </div>
+      </section>
+
+      <p class="meta" id="story"><a href="assets/Yamama_Amir_CV.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 1h6l3 3v11h-9z M9.5 1v3h3 M5.5 8h5 M5.5 10.5h5 M5.5 13h3" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>CV</a> &nbsp;|&nbsp;
+        <a href="https://github.com/Yamamaamirr" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a> &nbsp;|&nbsp;
+        <a href="https://www.linkedin.com/in/yamamaamir" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M4.5 5.8h-2.4V14h2.4zM3.3 1.8a1.4 1.4 0 100 2.8 1.4 1.4 0 000-2.8zM14 9.3c0-2.2-1.2-3.7-3.2-3.7-1 0-1.8.5-2.2 1.1v-.9H6.3V14h2.4V9.9c0-1.1.5-1.9 1.5-1.9s1.4.7 1.4 1.9V14H14z"/></svg>LinkedIn</a> &nbsp;|&nbsp;
+        <a href="https://www.upwork.com/freelancers/yamamaa2" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.561 13.158c-1.102 0-2.135-.467-3.074-1.227l.228-1.076.008-.042c.207-1.143.849-3.06 2.839-3.06 1.492 0 2.703 1.212 2.703 2.703-.001 1.489-1.212 2.702-2.704 2.702zm0-8.14c-2.539 0-4.51 1.649-5.31 4.366-1.22-1.834-2.148-4.036-2.687-5.892H7.828v7.112c-.002 1.406-1.141 2.546-2.547 2.548-1.405-.002-2.543-1.143-2.545-2.548V3.492H0v7.112c0 2.914 2.37 5.303 5.281 5.303 2.913 0 5.283-2.389 5.283-5.303v-1.19c.529 1.107 1.182 2.229 1.974 3.221l-1.673 7.873h2.797l1.213-5.71c1.063.679 2.285 1.109 3.686 1.109 3 0 5.439-2.452 5.439-5.45 0-3-2.439-5.439-5.439-5.439z"/></svg>Upwork</a></p>
+
+      <!-- ───────── Chapters ─────────
+           Each chapter's data-state drives the right-hand panel.
+           until: how far the contribution grid has filled. caps: 0 = not yet, 1 = learned, 2 = using now. -->
+
+      <section class="chapter" data-state='{
+        "until":"2022-12","date":"2021–25","role":"Geoinformatics undergraduate",
+        "skills":{"rs":40,"web":4,"research":10},"focus":"rs",
+        "caps":{"rs":2,"spatial":2,"web":0,"api":0,"terrain":1,"research":1},
+        "time":[90,0,10],
+        "stats":{"apps":0,"teams":1,"zones":1,"degrees":0},
+        "shipped":[],
+        "building":[],
+        "plates":[]
+      }'>
+        <h2>NUST, Islamabad: Learning to Read the Ground</h2>
+        <p class="lede">Geoinformatics is the art of looking at the Earth from above and not trusting the first answer.</p>
+        <p>My undergraduate degree at NUST was remote sensing, photogrammetry, geodesy and a great deal of GIS. I
+          learned to pull land cover out of Sentinel-2 and terrain out of SRTM, and why a map's projection is never a
+          neutral choice.</p>
+        <p>The project I remember best weighed seven criteria (slope, irradiance, land cover, distance to the grid) to
+          site utility-scale solar in a Pakistani district, with AHP weights I had to defend line by line. It was the
+          first time a map I made was meant to decide something.</p>
+      </section>
+
+      <section class="chapter" data-state='{
+        "until":"2025-06","date":"2023–25","role":"Undergraduate · Geospatial software engineer",
+        "skills":{"rs":55,"web":42,"research":14},"focus":"web",
+        "caps":{"rs":2,"spatial":2,"web":2,"api":2,"terrain":1,"research":0},
+        "time":[55,40,5],
+        "stats":{"apps":2,"teams":2,"zones":3,"degrees":1},
+        "shipped":["Fleet tracking platform · Adgile"],
+        "building":["Hydrotechnical dashboard · Earthbound AI"],
+        "plates":[]
+      }'>
+        <h2>2023: Maps That Have to Work on Monday</h2>
+        <p class="lede">In my second year I started shipping maps for a company seven thousand miles away.</p>
+        <p><b>Adgile Media Group</b> in New York runs fleets of mobile billboard trucks, and I joined remotely as a
+          geospatial software engineer. I built the real-time side of their platform: live GPS streamed into PostGIS,
+          raw traces snapped to roads with OSRM, and a React and Mapbox dashboard with live markers, route playback and
+          fleet health. Lectures in Islamabad by day, New York stand-ups by night.</p>
+        <p>In my final semester <b>Earthbound AI</b> in San Francisco brought me on as well, so I graduated in June 2025
+          already working for two American companies on two different clocks. Real users taught me what coursework
+          hadn't: a map that is slow, or wrong, is a map nobody opens twice.</p>
+      </section>
+
+      <div class="raster-break" aria-hidden="true">
+        <canvas id="raster"></canvas>
+        <p class="caption">Fig. 1 — A classified raster, revealed as you scroll. Blue, grey and black stand for three land-cover classes, the first thing a remote sensing course teaches you to make.</p>
+      </div>
+
+      <section class="chapter" data-state='{
+        "until":"2026-08","date":"2025–26","role":"GIS engineer · Earthbound AI","lane":"earthbound",
+        "skills":{"rs":62,"web":74,"research":22},"focus":"web",
+        "caps":{"rs":2,"spatial":2,"web":2,"api":2,"terrain":2,"research":0},
+        "time":[0,95,5],
+        "stats":{"apps":5,"teams":2,"zones":3,"degrees":1},
+        "shipped":["Fleet tracking platform · Adgile","Fleet Dashboard · Adgile","Hydrotechnical dashboard · Earthbound AI","3D pipeline viewer · Earthbound AI"],
+        "building":["Channel migration app · Earthbound AI"],
+        "plates":[]
+      }'>
+        <h2>Earthbound AI: Rivers and Pipelines</h2>
+        <p class="lede">Where a pipeline crosses a river, the river is always trying to move.</p>
+        <p>After graduating I went full time on both jobs. At Earthbound I was the primary developer on the geospatial
+          apps that pipeline operators use to watch that happen: three of them, backed by FastAPI and DuckDB services
+          reading GeoParquet straight from S3. Scroll through them and the dashboard on the right becomes each app in turn.</p>
+
+        <div class="apps" id="apps">
+          <figure class="app-stage" id="app-stage" aria-label="Earthbound app visuals">
+            <div class="app-view" data-view="0">
+              <svg class="hx-stage" id="hx-stage"></svg>
+              <svg class="hx-xs" id="hx-xs"></svg>
+              <div class="app-readout" id="hx-read"></div>
+            </div>
+            <div class="app-view" data-view="1">
+              <div class="m3d" id="m3d"><span class="m3d-wait">Loading model…</span></div>
+              <div class="app-readout" id="m3d-read"></div>
+            </div>
+            <div class="app-view" data-view="2">
+              <svg class="sc-map" id="sc-map"></svg>
+              <div class="app-readout" id="sc-read"></div>
+            </div>
+            <figcaption class="app-cap" id="app-cap"></figcaption>
+          </figure>
+
+          <div class="app-step" data-cap="Real crossing · location withheld">
+            <p class="app-no">App 1 of 3</p>
+            <h3>Hydrotechnical dashboard</h3>
+            <p>Every place a pipeline crosses a river gets a scenario: how high the water stands at mean annual flow, at
+              the two-year flood and at the ten-year maximum, how deep the flow scours the bed, and how much cover that leaves over the pipe.
+              This is one real crossing, a wide river in a deep valley. Keep scrolling and the water rises to the
+              ten-year flood. The channel nearly triples in width, spills onto a floodplain where the pipe runs
+              shallow, and about 350 feet of it lose their cover.</p>
+          </div>
+          <div class="app-step" data-cap="Terrain, curtain and pipe from the viewer's own model · location withheld · drag to turn">
+            <p class="app-no">App 2 of 3</p>
+            <h3>3D pipeline viewer</h3>
+            <p>About 300 metres of line at that same crossing, as the viewer shows it: terrain coloured by height, a
+              curtain hung along the pipe's route with the pipe drawn on it, so you can see how deep it runs under each rise.
+              In the app, the modelled pipe is checked against depth-of-cover surveys along the same line. The viewer also sets models like this onto the map in
+              their true position, so an engineer can fly from the whole network down to a single slope.</p>
+          </div>
+          <div class="app-step" data-cap="Real channel traces from satellite imagery, one per year · pipe lengths summed over the corridor's lines · location withheld">
+            <p class="app-no">App 3 of 3</p>
+            <h3>Channel migration</h3>
+            <p>Rivers move. The channel-migration app traces each river from satellite imagery, year after year, and
+              lays the traces over the pipelines, so an engineer can see where a channel is wandering long before a bank
+              reaches the pipe. This is one bend where a river crosses a pipeline corridor, traced every year from 2016
+              to 2024. Scroll and the years stack up: the channel never sits in quite the same place, and the stretch of
+              pipe it has crossed grows from about 500 feet to over 1,200.</p>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="chapter" data-state='{
+        "until":"2026-08","date":"2023–25","role":"Geospatial software engineer · Adgile Media","lane":"adgile",
+        "skills":{"rs":62,"web":74,"research":22},"focus":"web",
+        "caps":{"rs":2,"spatial":2,"web":2,"api":2,"terrain":2,"research":0},
+        "time":[0,95,5],
+        "stats":{"apps":5,"teams":2,"zones":3,"degrees":1},
+        "shipped":["Fleet tracking platform · Adgile","Fleet Dashboard · Adgile","Hydrotechnical dashboard · Earthbound AI","3D pipeline viewer · Earthbound AI"],
+        "building":["Channel migration app · Earthbound AI"],
+        "plates":[]
+      }'>
+        <h2>Adgile Media: Trucks, Pings and Proof</h2>
+        <p class="lede">The same months, a second clock: New York's billboard trucks.</p>
+
+        <div class="apps" id="ad-apps">
+          <figure class="app-stage" id="ad-stage" aria-label="Adgile platform visuals">
+            <div class="app-view on" data-view="ad">
+              <div class="ad-map" id="ad-box"><img id="ad-base" alt=""><svg id="ad-map"></svg></div>
+              <div class="app-readout" id="ad-read"></div>
+              <figcaption class="app-cap" id="ad-cap"></figcaption>
+            </div>
+          </figure>
+
+          <div class="app-step ad-intro" data-cap="Illustrative · a made-up city, truck and day">
+            <p>At Adgile I built the <a href="projects/fleet-dashboard/">Fleet Dashboard</a>, the platform behind a fleet
+              of mobile billboard trucks: live tracking, route history, and the geofences that prove to an advertiser
+              their campaign was actually seen. Here is one truck's morning, the way the platform sees it.</p>
+          </div>
+          <div class="app-step" data-cap="Illustrative · a made-up city, truck and day · the matching is the platform's own">
+            <p class="app-no">Step 1 of 3</p>
+            <h3>From pings to streets</h3>
+            <p>Every truck reports where it is every few seconds, and the raw positions drift: a few metres most of
+              the time, now and then a jump across the block. Each reading lands twice, in Firebase for the live map
+              and in PostGIS for the record. Then a routing engine matches the trace to the streets actually driven
+              and scores its own confidence, so a bad trace gets flagged instead of quietly trusted. That engine is
+              expensive to run, so it starts only when there is matching to do and shuts itself down afterwards.</p>
+          </div>
+          <div class="app-step" data-cap="Illustrative · a made-up city, truck and audience · the join is the platform's own">
+            <p class="app-no">Step 2 of 3</p>
+            <h3>Who could have seen it</h3>
+            <p>A campaign is sold on eyes, not miles. Every day the audience files arrive in S3, and the platform
+              joins them to the matched route, stretch by stretch. A loop through the busy core is worth far more than
+              the same distance on quiet side streets, and the ribbon swells to show it.</p>
+          </div>
+          <div class="app-step" data-cap="Illustrative · a made-up city, truck and zone · the clip is the platform's own">
+            <p class="app-no">Step 3 of 3</p>
+            <h3>Proof for the client</h3>
+            <p>The advertiser cares about one neighbourhood. Draw it as a geofence and PostGIS clips every route to it:
+              the miles, the minutes and the impressions inside, ready to export as the PDF or spreadsheet the client
+              receives. That export is the product. It is what turns a truck driving around into a campaign someone
+              will pay for again.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter chapter-now" data-state='{
+        "until":"2026-10","date":"Now","role":"Master’s student at NYU + Graduate research assistant",
+        "skills":{"rs":70,"web":74,"research":58},"focus":"research",
+        "caps":{"rs":2,"spatial":2,"web":1,"api":1,"terrain":1,"research":2},
+        "time":[45,20,35],
+        "stats":{"teams":3,"zones":1,"degrees":1,"apps":5},
+        "shipped":["Fleet tracking platform · Adgile","Fleet Dashboard · Adgile","Hydrotechnical dashboard · Earthbound AI","3D pipeline viewer · Earthbound AI","Channel migration app · Earthbound AI"],
+        "building":["Wildfire adaptation research · CERA Lab"],
+        "plates":["Plate I · Hudson Yards LiDAR","Plate II · Wildfire smoke over NYC","Plate III · Change detection from phone video","Plate IV · Karachi population and footprint","Plate V · The accessibility gap","Plate VI · Heat in a desert city"]
+      }'>
+        <h2>Now: NYU CUSP and the CERA Lab</h2>
+        <p class="lede">This fall I moved to Brooklyn, and from building tools to asking questions with them.</p>
+        <p>I'm doing a master's in <b>Urban Data Science at NYU's Center for Urban Science + Progress</b>. Alongside it
+          I'm a <b>graduate research assistant in the CERA Lab</b>, working with Professors <b>Augustin Guibaud</b> and
+          <b>Yuki Miura</b> on how cities adapt to wildfire: comparing sites in Los Angeles and Tulsa, harmonising
+          satellite imagery with land-management records, and mapping destruction and rebuilding before and after a
+          fire.</p>
+        <p>It's the same problem I spent three years on in industry, satellite data meeting messy administrative
+          records, now pointed at a question about who recovers and how fast. The plates in the Atlas below come from
+          this year.</p>
+      </section>
+
+      <section class="chapter" id="ch-next" data-state='{
+        "until":"2028-05","date":"Speculative","role":"Founder, Datum · Researcher",
+        "skills":{"rs":80,"web":80,"research":82},"focus":"research",
+        "caps":{"rs":2,"spatial":2,"web":2,"api":2,"terrain":2,"research":2},
+        "time":[30,30,40],
+        "stats":{"teams":3,"zones":1,"degrees":2,"apps":7},
+        "shipped":["Fleet tracking platform · Adgile","Fleet Dashboard · Adgile","Hydrotechnical dashboard · Earthbound AI","3D pipeline viewer · Earthbound AI","Channel migration app · Earthbound AI"],
+        "building":["Datum · a suite of geospatial tools","Wildfire adaptation research · CERA Lab"],
+        "plates":["Plate I · Hudson Yards LiDAR","Plate II · Wildfire smoke over NYC","Plate III · Change detection from phone video","Plate IV · Karachi population and footprint","Plate V · The accessibility gap","Plate VI · Heat in a desert city"]
+      }'>
+        <h2>Next: Datum, and the Questions Behind It</h2>
+        <p class="lede">This chapter is a forecast, but part of it has already started.</p>
+        <p>Alongside school I'm building my own company. We go by the name <b>Datum</b>, after the surface every map is
+          measured from, and we're making a suite of geospatial tools: GIS and photogrammetry tools, GeoAI, and civic
+          tools that turn public data into something a resident or a planner can actually use. It's the kind of work
+          I spent three years shipping for other people, now built on our own terms.</p>
+        <p>Research is the other half, and the part I'm most passionate about. I like the slow work of reading the
+          literature until a gap shows itself, then going after it with data. The questions I keep coming back to are
+          about urban equity, transit and who can get where, and the civic tools that could close those gaps.</p>
+        <p>If you're working on cities, transit or civic tech, we should talk.</p>
+      </section>
+
+      <!-- ───────── Atlas ───────── -->
+      <section id="atlas" class="atlas">
+        <h2>The Atlas</h2>
+        <p class="lede">Selected work, in two parts: research plates, and geoweb applications built for real users.</p>
+        <h3 class="atlas-cat"><span>I</span>Research &amp; analysis</h3>
+        <ol class="plates">
+          <li>
+            <a href="projects/hudson-yards/" data-abstract="Two airborne LiDAR surveys, 2014 and 2017, turned into surface models and subtracted to measure what rose over the rail yards: about 6.3 million cubic metres of new city." data-preview="img/atlas/hudson-yards.jpg">
+              <span class="plate-no">Plate I</span>
+              <span class="plate-title">Measuring the rise of Hudson Yards with LiDAR</span>
+              <span class="plate-meta">2026 · Airborne LiDAR · <i>How much city did Hudson Yards add in three years?</i></span>
+            </a>
+          </li>
+          <li>
+            <a href="projects/nyc-smoke/" data-abstract="The June 2023 Quebec wildfire smoke, followed to New York with Sentinel-5P and checked against EPA ground monitors. Aerosols rose about sixtyfold; the city's own traffic NO₂ didn't move." data-preview="img/atlas/nyc-smoke.jpg">
+              <span class="plate-no">Plate II</span>
+              <span class="plate-title">Tracing the Canadian wildfire smoke over New York City</span>
+              <span class="plate-meta">2026 · Atmospheric remote sensing · <i>Was the orange sky really Canada's smoke?</i></span>
+            </a>
+          </li>
+          <li>
+            <a href="projects/tabletop/" data-abstract="Structure from Motion on seven phone videos of a tabletop scene before and after a small demolition, scaled with four taped markers to measure a 7 cm change to within a millimetre." data-preview="img/atlas/tabletop.jpg">
+              <span class="plate-no">Plate III</span>
+              <span class="plate-title">A demolition on the dining table: change detection from phone video</span>
+              <span class="plate-meta">2026 · Photogrammetry · <i>Can a phone video measure a millimetre?</i></span>
+            </a>
+          </li>
+          <li>
+            <a href="projects/karachi/" data-abstract="Twenty years of global population and built-surface grids: Karachi gained 72% more people but only 20% more building footprint, packing them into the city it already had." data-preview="img/atlas/karachi.jpg">
+              <span class="plate-no">Plate IV</span>
+              <span class="plate-title">Karachi, the city that stacked: population against building footprint</span>
+              <span class="plate-meta">2026 · Population mapping · <i>Where did nine and a half million new people fit?</i></span>
+            </a>
+          </li>
+          <li>
+            <a href="projects/accessibility-gap/" data-abstract="Census tracts, subway stations and disability data across all five boroughs: where the gap to an accessible station clusters, why demographics don't explain it, and which ten elevators would close the most of it." data-preview="img/atlas/accessibility-gap.jpg">
+              <span class="plate-no">Plate V</span>
+              <span class="plate-title">Mapping the accessibility gap: subway elevators and the New Yorkers who need them</span>
+              <span class="plate-meta">2026 · Spatial statistics · <i>Which stations should get elevators next?</i></span>
+            </a>
+          </li>
+          <li>
+            <a href="projects/urban-heat-island/" data-abstract="Landsat 9 surface temperature, vegetation and built-up indices joined to social vulnerability across 788 Phoenix tracts during the July 2023 heat record. Vulnerable tracts are less green, but not hotter." data-preview="img/atlas/urban-heat-island.jpg">
+              <span class="plate-no">Plate VI</span>
+              <span class="plate-title">Heat in a desert city: Phoenix in the July 2023 heat record</span>
+              <span class="plate-meta">2026 · Thermal remote sensing · <i>Do the most vulnerable neighbourhoods get the hottest ground?</i></span>
+            </a>
+          </li>
+        </ol>
+        <h3 class="atlas-cat"><span>II</span>Geoweb applications</h3>
+        <ol class="plates apps">
+          <li>
+            <a href="projects/hydrotechnical/" data-abstract="For every place a pipeline crosses a river: how high the water rises at the mean, two-year and ten-year flows, and how much ground is left over the pipe." data-preview="img/atlas/hydrotechnical.jpg?v=2">
+              <span class="plate-no">App I</span>
+              <span class="plate-title">Hydrotechnical Dashboard: floods over buried pipe at river crossings</span>
+              <span class="plate-meta">2025–26 · For Earthbound AI</span>
+            </a>
+          </li>
+          <li>
+            <a href="projects/pipeline-viewer/" data-abstract="Terrain and a buried pipe in 3D, with an elevation profile that checks the modelled pipe against survey depths, set onto the map in true position." data-preview="img/atlas/pipeline-viewer.jpg?v=2">
+              <span class="plate-no">App II</span>
+              <span class="plate-title">3D Pipeline Viewer: turning the ground over to see the pipe</span>
+              <span class="plate-meta">2025–26 · For Earthbound AI</span>
+            </a>
+          </li>
+          <li>
+            <a href="projects/channel-migration/" data-abstract="River channels traced from satellite imagery every year and laid over the pipelines, so it's plain where a bend is moving toward a pipe." data-preview="img/atlas/channel-migration.jpg">
+              <span class="plate-no">App III</span>
+              <span class="plate-title">Channel Migration: years of river outlines over pipelines</span>
+              <span class="plate-meta">2026 · For Earthbound AI</span>
+            </a>
+          </li>
+          <li>
+            <a href="projects/fleet-dashboard/" data-abstract="Live tracking, route history and geofenced campaign proof for a fleet of mobile billboard trucks, from GPS pings to road-matched routes and impressions." data-preview="img/atlas/fleet-dashboard.jpg?v=3">
+              <span class="plate-no">App IV</span>
+              <span class="plate-title">Fleet Dashboard: tracking mobile billboards across US cities</span>
+              <span class="plate-meta">2025–26 · For Adgile Media Group</span>
+            </a>
+          </li>
+          <li>
+            <a href="projects/resource-map/" data-abstract="A live map of recovery, treatment and prevention services in Wilkes County, North Carolina, with an admin portal for the nonprofit's staff and privacy-first usage analytics." data-preview="img/atlas/resource-map.jpg">
+              <span class="plate-no">App V</span>
+              <span class="plate-title">Recovery Resource Map: finding help in Wilkes County, North Carolina</span>
+              <span class="plate-meta">2026 · For the nonprofit Recovery Revolution</span>
+            </a>
+          </li>
+</ol>
+      </section>
+
+      <section id="contact" class="contact">
+        <h2>Contact</h2>
+        <p>The best way to reach me is a short note to
+          <a href="mailto:yamama.amirr321@gmail.com">yamama.amirr321@gmail.com</a>. I read everything.</p>
+      </section>
+
+      <footer id="colophon" class="colophon">
+        <p>Set in ET Book and JetBrains Mono. Contribution grid drawn live on a canvas. No frameworks were harmed.</p>
+      </footer>
+    </main>
+
+    <!-- ───────── Sticky dashboard ───────── -->
+    <aside class="panel" aria-label="Live career dashboard" data-lenis-prevent>
+      <div class="panel-inner">
+        <div class="row-head">
+          <button class="panel-toggle" id="panel-toggle" aria-label="Expand dashboard" aria-expanded="false">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 6V2h4 M10 2h4v4 M14 10v4h-4 M6 14H2v-4"/></svg>
+          </button>
+          <span class="date-pill" id="p-date">2021–25</span>
+          <span class="role" id="p-role">Geoinformatics undergraduate</span>
+        </div>
+
+        <svg id="chart" class="chart"></svg>
+
+        <!-- Contribution grid: one square per week, coloured by where I was.
+             "level" is how busy each place keeps the squares (0–1, arbitrary for now). -->
+        <div class="map-wrap contrib-wrap" data-orgs='[
+          {"key":"nust","name":"NUST","role":"B.E. Geoinformatics","from":"2021-11","to":"2025-06","color":"#141414","rows":[0,1],"level":0.5},
+          {"key":"cusp","name":"NYU CUSP","role":"MS Urban Data Science","from":"2026-09","to":"2028-05","color":"#57068c","rows":[0,1],"level":0.6},
+          {"key":"cera","name":"CERA Lab","role":"Graduate Research Assistant","from":"2026-09","to":"2026-12","color":"#c8782f","rows":[2],"level":0.6},
+          {"key":"earthbound","name":"Earthbound AI","role":"GIS Engineer","from":"2025-01","to":"2026-08","color":"#2f7d6d","rows":[4,5],
+           "commits":{"2025-01":16,"2025-02":36,"2025-03":27,"2025-04":32,"2025-05":31,"2025-06":16,"2025-07":45,"2025-08":222,"2025-09":123,"2025-10":39,"2025-11":39,"2025-12":101,"2026-01":90,"2026-02":28,"2026-03":24,"2026-04":53,"2026-05":39,"2026-06":41,"2026-07":37,"2026-08":22}},
+          {"key":"adgile","name":"Adgile Media","role":"Geospatial Software Engineer","from":"2023-01","to":"2026-05","color":"#4f7fa8","rows":[6],
+           "commits":{"2023-01":7,"2023-02":32,"2023-03":19,"2023-04":16,"2023-05":31,"2023-06":18,"2023-07":40,"2023-08":20,"2023-09":32,"2023-10":16,"2023-11":22,"2023-12":33,"2024-01":19,"2024-02":28,"2024-03":24,"2024-04":19,"2024-05":18,"2024-06":9,"2024-07":28,"2024-08":19,"2024-09":22,"2024-10":29,"2024-11":16,"2024-12":21,"2025-01":17,"2025-02":20,"2025-03":15,"2025-04":30,"2025-05":23,"2025-06":47,"2025-07":29,"2025-08":50,"2025-09":88,"2025-10":19,"2025-11":38,"2025-12":72,"2026-01":35,"2026-02":63,"2026-03":119,"2026-04":56,"2026-05":35}}
+        ]'>
+          <div class="contrib-head">
+            <span class="contrib-now"><b id="p-org">NUST</b> <span id="p-orgrole">B.E. Geoinformatics</span></span>
+            <span class="map-label">1 column = 1 month</span>
+          </div>
+          <canvas id="contrib"></canvas>
+          <div class="contrib-key" id="contrib-key"></div>
+        </div>
+
+        <div class="caps-row">
+          <div class="caps-label">Capabilities</div>
+          <div class="caps" id="caps"></div>
+          <svg id="donut" class="donut" viewBox="0 0 100 100"></svg>
+        </div>
+
+        <p class="counter" id="p-counter"></p>
+        <div class="squares" id="p-squares"></div>
+
+        <div class="stats" id="p-stats"></div>
+
+        <div class="buckets">
+          <div><span>Apps shipped <b id="n-shipped"></b></span><div class="dots" id="b-shipped"></div></div>
+          <div><span class="accent">Building now <b id="n-building"></b></span><div class="dots accent" id="b-building"></div></div>
+          <div class="right"><span>Research plates <b id="n-plates"></b></span><div class="dots" id="b-plates"></div></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="tooltip" id="tooltip" role="tooltip"></div>
+  <figure class="atlas-preview" id="atlas-preview" aria-hidden="true">
+    <img alt="" width="560" height="420" />
+    <figcaption><span class="ap-no"></span></figcaption>
+    <p class="ap-abstract"></p>
+  </figure>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="sheet.js?v=2"></script>
+  <script src="main.js?v=13"></script>
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+  <script type="module" src="earthbound.js?v=56"></script>
+  <script type="module" src="adgile.js?v=28"></script>
+</body>
+</html>
