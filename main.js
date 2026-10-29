@@ -25,7 +25,9 @@
 
   // ───────── Chapters → state ─────────
   const chapters = [...document.querySelectorAll(".chapter")];
-  const states = chapters.map((c) => JSON.parse(c.dataset.state));
+  // the intro is state 0 (the undergraduate years), so the panel has something to grow from
+  const stops = [$(".intro"), ...chapters];
+  const states = stops.map((c) => JSON.parse(c.dataset.state));
   const N = states.length;
   const SKILLS = [
     ["rs", "Remote sensing"],
@@ -37,13 +39,15 @@
   // Each chapter holds its state for the first half, then eases into the next.
   function storyProgress() {
     const line = innerHeight * 0.55;
-    const tops = chapters.map((c) => c.getBoundingClientRect().top);
+    const tops = stops.map((c) => c.getBoundingClientRect().top);
     if (line < tops[0]) return 0;
     let i = 0;
     while (i < N - 1 && tops[i + 1] <= line) i++;
     if (i === N - 1) return N - 1;
+    // the intro hands over to the first chapter between the top of the page and its heading reaching the line
+    if (i === 0) return smooth(clamp(scrollY / Math.max(1, tops[1] + scrollY - line)));
     // a chapter with app steps holds its state until the last step has passed
-    const apps = [...chapters[i].querySelectorAll(".apps")].at(-1);
+    const apps = [...stops[i].querySelectorAll(".apps")].at(-1);
     const start = apps ? Math.max(tops[i], apps.getBoundingClientRect().bottom - innerHeight * 0.45) : tops[i];
     const frac = clamp((line - start) / (tops[i + 1] - start));
     return i + smooth(clamp((frac - 0.45) / 0.55));
@@ -164,18 +168,16 @@
     el.date.textContent = s.date;
     el.role.textContent = s.role;
     focusLane = s.lane || null;
-    revealM = untilAt(p);
-    // everyone active at this point in the story, study first; after the last one ends, the most recent
-    let now = activeAt(Math.floor(revealM));
-    if (!now.length) now = [...ORGS].filter((o) => o.b <= revealM).sort((x, y) => y.b - x.b).slice(0, 1);
-    // in a company's chapter, the grid's title names that company
-    if (focusLane) now = ORGS.filter((o) => o.key === focusLane);
+    shownAt(p);
+    // in a company's chapter, the grid's title names that company; otherwise the state names it
+    const keys = focusLane ? [focusLane] : s.title || [];
+    const now = ORGS.filter((o) => keys.includes(o.key));
     el.org.textContent = now.map((o) => o.name).join(" + ");
     el.orgRole.textContent = now.length === 1 ? now[0].role : "";
     drawChart(p, s.focus);
     capEls.forEach((c) => (c.dataset.level = s.caps[c.dataset.cap]));
     drawDonut(s.time);
-    const months = workMonthsTo(revealM);
+    const months = workMonths();
     el.counter.innerHTML = `<b>${months}</b> month${months === 1 ? "" : "s"} of industry work`;
     setCount(el.squares, clamp(months, 0, 40));
     el.stats.querySelectorAll("b").forEach((b) => (b.textContent = fmt(s.stats[b.dataset.k])));
@@ -227,14 +229,12 @@
   const TODAY = (() => { const d = new Date(); return d.getFullYear() * 12 + d.getMonth(); })();
   const LANES = [["Study", 0, 1], ["Research", 2, 2], ["Work", 4, 6]];
   ORGS.forEach((o) => { o.a = month(o.from); o.b = month(o.to); });
-  const activeAt = (m) => ORGS.filter((o) => m >= o.a && m <= o.b).sort((x, y) => x.rows[0] - y.rows[0]);
-  // months with any work lane active up to the story's date; overlapping jobs count once
+  // how much of each place the grid shows (0–1), filled left to right as the story reaches it
+  const shown = Object.fromEntries(ORGS.map((o) => [o.key, 0]));
+  // months of work shown so far, counting only months that have happened
   const WORK = ORGS.filter((o) => o.rows[0] >= 4);
-  const workMonthsTo = (m) => {
-    let n = 0;
-    for (let k = GRID_A; k <= Math.floor(m); k++) if (WORK.some((o) => k >= o.a && k <= o.b)) n++;
-    return n;
-  };
+  const workMonths = () =>
+    Math.round(WORK.reduce((n, o) => n + shown[o.key] * Math.max(0, Math.min(o.b, TODAY) - o.a + 1), 0));
   const cells = [];
   for (let c = 0; c < COLS; c++) {
     const m = GRID_A + c;
@@ -252,13 +252,14 @@
 
   const contrib = $("#contrib");
   const cctx = contrib.getContext("2d");
-  let cw = 0, chh = 0, revealM = 0, gridBusy = true;
+  let cw = 0, chh = 0, gridBusy = true;
   // a company's chapter lights its own lane and dims the rest, so the grid says whose work comes next
   let focusLane = null;
   const lit = { a: 0, key: null };
-  const untilAt = (p) => {
+  const shownAt = (p) => {
     const i = Math.min(Math.floor(p), N - 2), t = p - i;
-    return lerp(month(states[i].until), month(states[i + 1].until), t);
+    const has = (st, k) => ((st.show || []).includes(k) ? 1 : 0);
+    ORGS.forEach((o) => (shown[o.key] = lerp(has(states[i], o.key), has(states[i + 1], o.key), t)));
   };
   const tint = (hex, a) => {  // the org colour mixed into paper, like GitHub's four greens
     const n = parseInt(hex.slice(1), 16), P = [255, 255, 248];
@@ -266,6 +267,9 @@
   };
   const SHADE = [0.14, 0.32, 0.55, 0.78, 1];
   const inLane = (r) => LANES.some(([, a, b]) => r >= a && r <= b);
+  // on load the first place sweeps in over about a second instead of appearing at once
+  const t0 = performance.now();
+  let intro = reduceMotion ? 1 : 0;
 
   function drawContrib() {
     if (!cw || !chh) return false;
@@ -273,6 +277,7 @@
     const labW = small ? 0 : 66, yearH = small ? 0 : 16;
     const step = (cw - labW) / COLS, sw = Math.max(1, step - Math.max(1, step * 0.18));
     const rowH = (chh - yearH) / ROWS, sh = Math.max(1, rowH - Math.max(1, rowH * 0.22));
+    intro = reduceMotion ? 1 : clamp((performance.now() - t0 - 300) / 1100);
     cctx.clearRect(0, 0, cw, chh);
     cctx.font = `11px ${monoFont()}`;
     cctx.fillStyle = "#646462";
@@ -282,13 +287,14 @@
       cctx.textBaseline = "middle";
       LANES.forEach(([name, a, b]) => cctx.fillText(name, 0, yearH + ((a + b + 1) / 2) * rowH));
     }
-    let busy = false;
+    let busy = intro < 1;
     if (focusLane) lit.key = focusLane;
     lit.a += ((focusLane ? 1 : 0) - lit.a) * (reduceMotion ? 1 : 0.12);
     if (Math.abs((focusLane ? 1 : 0) - lit.a) > 0.01) busy = true;
     for (const cell of cells) {
       if (!inLane(cell.r)) continue;
-      const target = cell.m <= revealM ? 1 : 0;
+      const o = cell.org;
+      const target = o && (cell.m - o.a + 0.5) / (o.b - o.a + 1) <= shown[o.key] * intro ? 1 : 0;
       cell.a += (target - cell.a) * (reduceMotion ? 1 : 0.16);
       if (Math.abs(target - cell.a) > 0.01) busy = true;
       const x = labW + cell.c * step, y = yearH + cell.r * rowH;
@@ -310,47 +316,11 @@
     return busy;
   }
 
-  // ───────── Raster figure: a land-cover classification revealed by scroll ─────────
-  const raster = $("#raster");
-  const rctx = raster.getContext("2d");
-  let rw = 0, rh = 0;
-  const RC = 40, RR = 25;
-  const tiles = [];
-  for (let j = 0; j < RR; j++)
-    for (let i = 0; i < RC; i++) {
-      const v = fbm(i * 0.13 + 11, j * 0.13 + 3, 0.5);
-      const cls = v > 0.56 ? "#4f7fa8" : v > 0.44 ? "#cccccc" : "#141414";
-      tiles.push({ i, j, cls, at: (i / RC) * 0.65 + noise3(i * 0.4, j * 0.4, 9) * 0.35, a: 0 });
-    }
-  function drawRaster() {
-    if (!rw) return;
-    const r = raster.getBoundingClientRect();
-    if (r.bottom < 0 || r.top > innerHeight) return;
-    const prog = clamp((innerHeight * 0.9 - r.top) / (r.height + innerHeight * 0.35)) * 1.15;
-    const gap = 2, tw2 = (rw - gap * (RC - 1)) / RC, th2 = (rh - gap * (RR - 1)) / RR;
-    rctx.clearRect(0, 0, rw, rh);
-    for (const t of tiles) {
-      const target = prog > t.at ? 1 : 0;
-      t.a += (target - t.a) * (reduceMotion ? 1 : 0.12);
-      const x = t.i * (tw2 + gap), y = t.j * (th2 + gap);
-      rctx.fillStyle = "#444444";
-      rctx.fillRect(x, y, tw2, th2);
-      if (t.a > 0.01) {
-        rctx.globalAlpha = t.a;
-        rctx.fillStyle = t.cls;
-        const s = 0.6 + 0.4 * t.a;
-        rctx.fillRect(x + (tw2 * (1 - s)) / 2, y + (th2 * (1 - s)) / 2, tw2 * s, th2 * s);
-        rctx.globalAlpha = 1;
-      }
-    }
-  }
-
   function resize() {
     // seven rows (three lanes and a gap); short in the phone's collapsed bar
     contrib.style.height = (contrib.clientWidth < 200 ? 7 * 5 : 16 + 7 * 13) + "px";
     [cw, chh] = sizeCanvas(contrib, cctx);
     gridBusy = true;
-    [rw, rh] = sizeCanvas(raster, rctx);
     renderPanel(current.p);
   }
   addEventListener("resize", resize);
@@ -432,7 +402,7 @@
   }
 
   // ───────── Reveal on scroll ─────────
-  const revealables = document.querySelectorAll(".intro p, .pills, .chapter > *, .atlas > *, .contact > *, .raster-break");
+  const revealables = document.querySelectorAll(".intro p, .pills, .chapter > *, .atlas > *, .contact > *");
   revealables.forEach((n) => n.classList.add("reveal"));
   const io = new IntersectionObserver(
     (entries) => entries.forEach((e) => e.isIntersecting && (e.target.classList.add("in"), io.unobserve(e.target))),
@@ -443,13 +413,14 @@
 
   // ───────── Map sheet (sheet.js) ─────────
   const { ROMAN } = window.MapSheet;
-  MapSheet.setLabel(() => `SHEET ${ROMAN[Math.min(N, Math.round(current.p) + 1) - 1]} OF ${ROMAN[N - 1]}`);
+  const NC = chapters.length;
+  MapSheet.setLabel(() => `SHEET ${ROMAN[clamp(Math.round(current.p), 1, NC) - 1]} OF ${ROMAN[NC - 1]}`);
 
   // sheet numbers above each chapter heading
   chapters.forEach((c, i) => {
     const k = document.createElement("p");
     k.className = "sheet-no";
-    k.textContent = `Sheet ${ROMAN[i]} of ${ROMAN[N - 1]}`;
+    k.textContent = `Sheet ${ROMAN[i]} of ${ROMAN[NC - 1]}`;
     c.insertBefore(k, c.firstChild);
   });
 
@@ -463,7 +434,6 @@
     current.p = Math.abs(p - next) < 0.0004 ? p : next;
     if (moved) renderPanel(current.p);
     if (moved || gridBusy) gridBusy = drawContrib();
-    drawRaster();
     requestAnimationFrame(frame);
   }
 

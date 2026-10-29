@@ -663,7 +663,8 @@ let active = -1, last = "";
 function frame() {
   const line = innerHeight * 0.55;
   const first = steps[0].getBoundingClientRect(), end = steps.at(-1).getBoundingClientRect();
-  const inside = line >= first.top && line <= end.bottom;
+  // the stage takes over the panel a little before the first app step reaches the reading line
+  const inside = innerHeight * 0.8 >= first.top && line <= end.bottom;
   stage.classList.toggle("live", desktop.matches && inside);
   let i = 0;
   for (let k = 0; k < steps.length; k++) if (steps[k].getBoundingClientRect().top <= line) i = k;

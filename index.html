@@ -91,17 +91,23 @@
   <div class="layout">
     <main class="prose">
       <!-- ───────── Intro ───────── -->
-      <section class="intro">
-        <p>Growing up, geography was never my forte. I had no sense of space (no pun intended), couldn't read a map to save my life, and somehow
-          ended up spending plenty of time studying geographic science. Somewhere along the way, it clicked, and it's been my
+      <section class="intro" data-state='{
+        "date":"2021–25","role":"Geoinformatics undergraduate","title":["nust"],"show":["nust"],
+        "skills":{"rs":40,"web":4,"research":10},"focus":"rs",
+        "caps":{"rs":2,"spatial":2,"web":0,"api":0,"terrain":1,"research":1},
+        "time":[90,0,10],
+        "stats":{"apps":0,"teams":0,"zones":1,"degrees":0},
+        "shipped":[],"building":[],"plates":[]
+      }'>
+        <p>Growing up, geography was never my forte. I had no sense of space (no pun intended), couldn't read a map to save my life, and yet
+          somehow ended up spending years studying geographic science. Somewhere along the way, it clicked, and it's been my
           favourite rabbit hole ever since.</p>
-        <p>Now I work in GeoAI for cities, mostly across mobility, civic tools, and urban equity. Here you'll find things I've
-          built for companies I've worked with, alongside a pile of analyses I did out of curiosity or
-          the night before an assignment was due.<sup class="fn" data-note="The panel on the right fills in as you scroll. It works like a GitHub contribution graph: one column per month since 2021, one lane each for study, research and work, so you can see where they overlapped. Filled months show when each one was active.">1</sup></p>
+        <p>Now, I work in GeoAI for cities, mostly across mobility, civic tools, and urban equity. Here, you'll find projects
+          I've built for companies alongside a pile of analyses I did out of pure curiosity (or the night before an
+          assignment was due).<sup class="fn" data-note="The panel on the right fills in as you scroll. It works like a GitHub contribution graph: one column per month since 2021, one lane each for study, research and work, so you can see where they overlapped. Filled months show when each one was active.">1</sup></p>
         <div class="pills">
           <a href="#story">What do I do?</a>
           <a href="#atlas">What have I built?</a>
-          <a href="#ch-next">Where am I going?</a>
           <a href="#contact">Say hello</a>
         </div>
       </section>
@@ -115,61 +121,17 @@
            until: how far the contribution grid has filled. caps: 0 = not yet, 1 = learned, 2 = using now. -->
 
       <section class="chapter" data-state='{
-        "until":"2022-12","date":"2021–25","role":"Geoinformatics undergraduate",
-        "skills":{"rs":40,"web":4,"research":10},"focus":"rs",
-        "caps":{"rs":2,"spatial":2,"web":0,"api":0,"terrain":1,"research":1},
-        "time":[90,0,10],
-        "stats":{"apps":0,"teams":1,"zones":1,"degrees":0},
-        "shipped":[],
+        "date":"2023","role":"GIS engineer · Earthbound AI","lane":"earthbound","show":["nust","earthbound"],
+        "skills":{"rs":55,"web":42,"research":14},"focus":"web",
+        "caps":{"rs":2,"spatial":2,"web":2,"api":2,"terrain":2,"research":0},
+        "time":[55,40,5],
+        "stats":{"apps":3,"teams":1,"zones":2,"degrees":0},
+        "shipped":["Hydrotechnical dashboard · Earthbound AI","3D pipeline viewer · Earthbound AI","Channel migration app · Earthbound AI"],
         "building":[],
         "plates":[]
       }'>
-        <h2>NUST, Islamabad: Learning to Read the Ground</h2>
-        <p class="lede">Four years of looking at the Earth from above and learning not to trust the first answer.</p>
-        <p>My degree at NUST was remote sensing, photogrammetry, geodesy and a lot of GIS. I learned to pull land cover
-          out of Sentinel-2 and terrain out of SRTM, and that picking a map projection is never as neutral as it looks.</p>
-        <p>The project I remember best was working out where utility-scale solar should go in a district in Pakistan. I
-          weighed seven things, like slope, sunlight, land cover and distance to the grid, and had to defend every weight
-          line by line. It was the first time a map I made was supposed to decide something.</p>
-      </section>
-
-      <section class="chapter" data-state='{
-        "until":"2025-06","date":"2023–25","role":"Undergraduate · Geospatial software engineer",
-        "skills":{"rs":55,"web":42,"research":14},"focus":"web",
-        "caps":{"rs":2,"spatial":2,"web":2,"api":2,"terrain":1,"research":0},
-        "time":[55,40,5],
-        "stats":{"apps":2,"teams":2,"zones":3,"degrees":1},
-        "shipped":["Fleet tracking platform · Adgile"],
-        "building":["Hydrotechnical dashboard · Earthbound AI"],
-        "plates":[]
-      }'>
-        <h2>2023: Maps That Have to Work on Monday</h2>
-        <p class="lede">In my second year I started shipping maps for a company seven thousand miles away.</p>
-        <p><b>Adgile Media Group</b> in New York puts advertising on the sides of trucks and drives them around cities. I
-          joined remotely as a geospatial software engineer and built the part of their platform that knows where every
-          truck is right now, and everywhere it has been. Lectures in Islamabad by day, New York stand-ups by night.</p>
-        <p>In my final semester <b>Earthbound AI</b> in San Francisco brought me on too, so by the time I graduated in June
-          2025 I was working for two American companies on two different clocks. Real users taught me something coursework
-          hadn't. If a map is slow, or wrong, nobody opens it twice.</p>
-      </section>
-
-      <div class="raster-break" aria-hidden="true">
-        <canvas id="raster"></canvas>
-        <p class="caption">Fig. 1 — A classified raster that fills in as you scroll. Blue, grey and black are three land-cover classes, the first thing any remote sensing course has you make.</p>
-      </div>
-
-      <section class="chapter" data-state='{
-        "until":"2026-08","date":"2025–26","role":"GIS engineer · Earthbound AI","lane":"earthbound",
-        "skills":{"rs":62,"web":74,"research":22},"focus":"web",
-        "caps":{"rs":2,"spatial":2,"web":2,"api":2,"terrain":2,"research":0},
-        "time":[0,95,5],
-        "stats":{"apps":5,"teams":2,"zones":3,"degrees":1},
-        "shipped":["Fleet tracking platform · Adgile","Fleet Dashboard · Adgile","Hydrotechnical dashboard · Earthbound AI","3D pipeline viewer · Earthbound AI"],
-        "building":["Channel migration app · Earthbound AI"],
-        "plates":[]
-      }'>
         <h2>Earthbound AI: Rivers and Pipelines</h2>
-        <p class="lede">Where a pipeline crosses a river, the river is always trying to move.</p>
+        <p class="lede">My first job was as a GIS engineer at Earthbound AI, a startup in California.</p>
         <p>Pipelines in the US cross rivers thousands of times, usually a few metres under the bed, under wide valley
           rivers and creeks you could step across alike. Every one of those crossings rests on a simple assumption, that
           the river will stay where the map says it is. Rivers rarely cooperate. National river lines can be off by as
@@ -230,17 +192,17 @@
       </section>
 
       <section class="chapter" data-state='{
-        "until":"2026-08","date":"2023–25","role":"Geospatial software engineer · Adgile Media","lane":"adgile",
+        "date":"2025–26","role":"Geospatial software engineer · Adgile Media","lane":"adgile","show":["nust","earthbound","adgile"],
         "skills":{"rs":62,"web":74,"research":22},"focus":"web",
         "caps":{"rs":2,"spatial":2,"web":2,"api":2,"terrain":2,"research":0},
         "time":[0,95,5],
         "stats":{"apps":5,"teams":2,"zones":3,"degrees":1},
-        "shipped":["Fleet tracking platform · Adgile","Fleet Dashboard · Adgile","Hydrotechnical dashboard · Earthbound AI","3D pipeline viewer · Earthbound AI"],
-        "building":["Channel migration app · Earthbound AI"],
+        "shipped":["Hydrotechnical dashboard · Earthbound AI","3D pipeline viewer · Earthbound AI","Channel migration app · Earthbound AI","Fleet tracking platform · Adgile","Fleet Dashboard · Adgile"],
+        "building":[],
         "plates":[]
       }'>
         <h2>Adgile Media: Trucks, Pings and Proof</h2>
-        <p class="lede">Same months on a second clock, this time with billboard trucks in New York.</p>
+        <p class="lede">Later I took a part-time role at Adgile Media Group to build their GPS fleet monitoring system.</p>
 
         <div class="apps" id="ad-apps">
           <figure class="app-stage" id="ad-stage" aria-label="Adgile platform visuals">
@@ -285,7 +247,7 @@
       </section>
 
       <section class="chapter chapter-now" data-state='{
-        "until":"2026-10","date":"Now","role":"Master’s student at NYU + Graduate research assistant",
+        "date":"Now","role":"Master’s student at NYU + Graduate research assistant","title":["cusp","cera"],"show":["nust","earthbound","adgile","cusp","cera"],
         "skills":{"rs":70,"web":74,"research":58},"focus":"research",
         "caps":{"rs":2,"spatial":2,"web":1,"api":1,"terrain":1,"research":2},
         "time":[45,20,35],
@@ -301,24 +263,6 @@
           <b>Yuki Miura</b> on how cities adapt to wildfire. We're comparing sites in Los Angeles and Tulsa, lining up
           satellite imagery with land-management records, and mapping what was destroyed and rebuilt before and after a
           fire.</p>
-      </section>
-
-      <section class="chapter" id="ch-next" data-state='{
-        "until":"2026-10","date":"Next","role":"Master’s student at NYU + Graduate research assistant",
-        "skills":{"rs":70,"web":74,"research":58},"focus":"research",
-        "caps":{"rs":2,"spatial":2,"web":1,"api":1,"terrain":1,"research":2},
-        "time":[45,20,35],
-        "stats":{"teams":3,"zones":1,"degrees":1,"apps":5},
-        "shipped":["Fleet tracking platform · Adgile","Fleet Dashboard · Adgile","Hydrotechnical dashboard · Earthbound AI","3D pipeline viewer · Earthbound AI","Channel migration app · Earthbound AI"],
-        "building":["Wildfire adaptation research · CERA Lab"],
-        "plates":["Plate I · The accessibility gap","Plate II · Heat in a desert city","Plate III · Karachi population and footprint","Plate IV · Hudson Yards LiDAR","Plate V · Wildfire smoke over NYC","Plate VI · Change detection from phone video"]
-      }'>
-        <h2>Next: The Questions I Keep Coming Back To</h2>
-        <p class="lede">Research is the part I enjoy most.</p>
-        <p>I like the slow bit, reading papers until a gap shows up and then going after it with data. The questions I
-          keep coming back to are about urban equity, transit and who can actually get where, and the civic tools that
-          could close those gaps.</p>
-        <p>If you're working on cities, transit or civic tech, we should talk.</p>
       </section>
 
       <!-- ───────── Atlas ───────── -->
@@ -413,7 +357,7 @@
       <section id="contact" class="contact">
         <h2>Contact</h2>
         <p>The best way to reach me is a short note to
-          <a href="mailto:yamama.amirr321@gmail.com">yamama.amirr321@gmail.com</a>. I read everything.</p>
+          <a href="mailto:yamama.amirr321@gmail.com">yamama.amirr321@gmail.com</a>. I read everything, and if you're working on cities, transit or civic tech, we should talk.</p>
       </section>
 
       <footer id="colophon" class="colophon">
@@ -440,8 +384,8 @@
           {"key":"nust","name":"NUST","role":"B.E. Geoinformatics","from":"2021-11","to":"2025-06","color":"#141414","rows":[0,1],"level":0.5},
           {"key":"cusp","name":"NYU CUSP","role":"MS Urban Data Science","from":"2026-09","to":"2028-05","color":"#57068c","rows":[0,1],"level":0.6},
           {"key":"cera","name":"CERA Lab","role":"Graduate Research Assistant","from":"2026-09","to":"2026-12","color":"#c8782f","rows":[2],"level":0.6},
-          {"key":"earthbound","name":"Earthbound AI","role":"GIS Engineer","from":"2025-01","to":"2026-08","color":"#2f7d6d","rows":[4,5],"level":0.7},
-          {"key":"adgile","name":"Adgile Media","role":"Geospatial Software Engineer","from":"2023-01","to":"2026-05","color":"#4f7fa8","rows":[6],"level":0.7}
+          {"key":"earthbound","name":"Earthbound AI","role":"GIS Engineer","from":"2023-01","to":"2023-08","color":"#2f7d6d","rows":[4,5],"level":0.7},
+          {"key":"adgile","name":"Adgile Media","role":"Geospatial Software Engineer","from":"2025-09","to":"2026-08","color":"#4f7fa8","rows":[6],"level":0.7}
         ]'>
           <div class="contrib-head">
             <span class="contrib-now"><b id="p-org">NUST</b> <span id="p-orgrole">B.E. Geoinformatics</span></span>
@@ -480,9 +424,9 @@
 
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
   <script src="sheet.js?v=2"></script>
-  <script src="main.js?v=14"></script>
+  <script src="main.js?v=17"></script>
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
-  <script type="module" src="earthbound.js?v=56"></script>
+  <script type="module" src="earthbound.js?v=57"></script>
   <script type="module" src="adgile.js?v=28"></script>
 </body>
 </html>
